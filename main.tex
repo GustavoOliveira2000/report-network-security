@@ -35,6 +35,8 @@
 \begin{acronym}
 \acro{DSL}{Domain-Specific Language}
 \acro{HPC}{High-Performance Computing}
+\acro{SSI}{Self-Sovereign Identity}
+\acro{EUDI}{European Digital Identity}
 \end{acronym}
 
 % title and authors
@@ -89,6 +91,52 @@ The ARF specifies standardized data exchange protocols to guarantee secure and i
 
 \subsection{Summary}
 In summary, the ARF provides a robust architectural foundation for the European Digital Identity Wallet, addressing critical aspects such as identity management, trust services, and secure data exchange. By adhering to the principles of security, privacy, and interoperability, and by aligning with the regulatory framework of eIDAS 2.0, the ARF aims to foster a trustworthy and user-centric digital identity ecosystem across the EU~\cite{EU_ARF2024,EU_eIDAS2024}.
+
+% % % % % % % % % % % % % % % % % % % % %
+%        SELF-SOVEREIGN PRINCIPLES
+% % % % % % % % % % % % % % % % % % % % %
+\section{Self-Sovereign Principles}
+\label{sec:ssi}
+
+Self-Sovereign Identity (SSI) represents a paradigm shift in digital identity management, placing individuals at the centre of control over their personal data. Unlike traditional centralised systems where identity providers hold and assert credentials on behalf of users, SSI enables individuals to maintain their own cryptographically signed attestations and selectively reveal attributes when interacting with services. The European Digital Identity (EUDI) Wallet adapts these foundational SSI principles within a legally binding regulatory framework to meet the requirements of eIDAS 2.0 (Regulation 2024/1183). This section examines how the EUDI Wallet implements core SSI concepts: user sovereignty, verifiable credentials, selective disclosure, and privacy-enhancing techniques. It also highlights the architectural and governance differences that distinguish the EUDI Wallet from decentralised SSI implementations.
+
+\subsection{User Control and Data Sovereignty}
+
+The principle of user sovereignty, whereby individuals control the storage, management, and disclosure of their identity data, distinguishes SSI from traditional identity systems. In the EUDI ecosystem, credentials reside on the user's device rather than in centralised registries, and explicit consent is required before any attribute is shared with a relying party~\cite{ZKPDicsussion_Recital15,ZKPDicsussion_Article5a}. Citizens may request, select, store, delete, and share identity data at their discretion, and the wallet architecture prevents both issuers and verifiers from tracking user behaviour across transactions~\cite{ZKPDicsussion_Article5a}. 
+
+Independent analyses confirm that the EUDI Wallet grants users complete control over their credentials, allowing them to decide what information to reveal, with whom, and when~\cite{Gataca_ARF_SSI,ISC2_PrivacyDataSovereignty}. This decentralised storage model ensures that personal data sovereignty remains with the holder rather than service providers. Under eIDAS 2.0, every Member State must provide at least one EUDI Wallet solution enabling citizens to access public and private services using their own verifiable credentials~\cite{PortoThesis_Requirements}. These provisions institutionalise data sovereignty as a fundamental right within the European digital identity ecosystem.
+
+\subsection{Verifiable Credentials and Trust Frameworks}
+
+The SSI model operates on a three-party trust relationship: issuers create digitally signed credentials, holders store them in their wallets, and verifiers accept cryptographic proofs of credential possession. The EUDI Architecture and Reference Framework (ARF) adopts this structure through Person Identification Data (PID) and Electronic Attestations of Attributes (EAAs), which are issued by qualified trust service providers under eIDAS 2.0~\cite{PortoThesis_Structure}. These attestations are cryptographically bound to the holder through device keys and can be independently verified without contacting the issuer.
+
+Trust in this ecosystem is anchored through trust registries that allow verifiers to retrieve issuer metadata and validate certificate status, thereby supporting cross-border credential recognition~\cite{PortoThesis_Structure,Finextra_SSI_Components}. Crucially, the ARF does not mandate distributed ledger technologies. Instead, it relies on qualified trust service providers and public-private governance arrangements to establish trust~\cite{Finextra_SSI_Differences}. This approach distinguishes the EUDI Wallet from many blockchain-based SSI systems while maintaining the core verification benefits of cryptographically signed credentials.
+
+\subsection{Selective Disclosure and Privacy-Enhancing Techniques}
+
+Data minimisation, the practice of disclosing only the attributes necessary for a given transaction, is a cornerstone of SSI privacy protection. The ARF explicitly defines selective disclosure as the capability for the wallet to present a subset of user attributes from PID or EAA attestations~\cite{ARF_SelectDisclosureDefinition}. High-level requirements mandate that all PID and EAA credentials support selective disclosure through privacy-preserving formats such as selective-disclosure JSON Web Tokens (SD-JWT) or mobile security objects~\cite{ARF_AttestationSelectiveDisclosure}.
+
+In practice, when a verifier requests proof of a specific attribute, the wallet constructs a presentation containing only the requested data. For example, a merchant can verify that a customer is over 18 years old without learning the customer's name, date of birth, or address~\cite{ISC2_SelectDisclosureExample,DocuSign_SelectDisclosure}. This capability reduces both privacy risks and fraud exposure while maintaining regulatory compliance.
+
+The discussion on zero-knowledge proofs within the ARF emphasises the importance of privacy-preserving technologies that enable validators to confirm statements without accessing underlying personal data~\cite{ZKPDicsussion_Recital59}. Recital 59 of the regulation specifically calls for techniques like zero-knowledge proofs to validate claims while preserving privacy, and Article 5a mandates that wallets prevent correlation of presentations across different services~\cite{ZKPDicsussion_Recital59,ZKPDicsussion_Article5a}. These technical measures, combined with architectural requirements for unlinkability, ensure that data minimisation and privacy-by-design are embedded throughout the system~\cite{Potential_PrivacyDesign}.
+
+\subsection{Interoperability and Security}
+
+The EUDI Wallet architecture is guided by four foundational principles: user-centricity, interoperability, privacy by design, and security by design~\cite{ISC2_GuidingPrinciples}. User-centricity ensures that holders retain the authority to decide which credentials to present and may revoke consent at any time~\cite{ISC2_ConsentRole,Potential_UserCentricity}. Transparency regarding data sharing (what is shared, with whom, and for what purpose) is maintained throughout each transaction.
+
+Interoperability is achieved through adherence to open standards such as OpenID Connect for verifiable presentations and the W3C verifiable credentials data model, combined with legal mechanisms under eIDAS 2.0 that ensure cross-border recognition of credentials and trust services~\cite{Finextra_SSI_Components}. This standardisation enables seamless interaction between national and sectoral systems across the European Union.
+
+Privacy by design is operationalised through selective disclosure, zero-knowledge proofs, and architectural safeguards against tracking and linkability~\cite{ZKPDicsussion_Article5a,Potential_PrivacyDesign}. Security by design integrates strong authentication mechanisms, including multi-factor authentication, secure hardware for cryptographic key storage, and rigorous protocols for credential protection~\cite{ISC2_GuidingPrinciples,Potential_SecurityDesign}. Together, these principles adapt SSI concepts to a high-assurance, legally compliant framework that balances decentralisation with regulatory oversight.
+
+\subsection{Differences from Decentralised SSI Implementations}
+
+Although the EUDI Wallet incorporates core SSI principles, it diverges from pure decentralised identity systems in several significant ways. The eIDAS 2.0 architecture does not require blockchain or distributed ledger technologies; trust is instead anchored via qualified trust service providers operating under regulatory supervision~\cite{Finextra_SSI_Differences}. Credentials and electronic signatures issued within the EUDI ecosystem carry legal binding force under European law, providing a level of assurance not typically present in permissionless blockchain-based systems.
+
+Furthermore, the EUDI Wallet operates within a hybrid public-private governance framework that balances the decentralisation benefits of SSI with government-mandated assurance levels and compliance requirements, including strong customer authentication under the Payment Services Directive (PSD2)~\cite{Finextra_SSI_Differences}. Standardised protocols and attestation formats ensure both interoperability and legal recognition. These architectural choices reflect a pragmatic adaptation of SSI principles to the regulatory and operational requirements of a continent-wide digital identity infrastructure.
+
+\subsection{Summary}
+
+The EUDI Wallet represents a synthesis of SSI principles and regulatory compliance, embedding user control, verifiable attestations, selective disclosure, and privacy-enhancing cryptography within a unified legal framework. By combining privacy-preserving techniques with trust registries and qualified service providers, the ARF enables European citizens to prove identity attributes across borders while maintaining sovereignty over their personal information~\cite{EU_ARF2024,EU_eIDAS2024}. The result is a hybrid identity system that empowers individuals, protects privacy, and fosters cross-border interoperability within the EU's digital single market.
 % % % % % % % % % % % % % % % % % % % % %
 % 			YOUR SOLUTION
 % % % % % % % % % % % % % % % % % % % % %

@@ -1,0 +1,61 @@
+\ProvidesPackage{specs}
+
+\usepackage{listings}
+\usepackage[usenames,dvipsnames,table]{xcolor}
+
+% command to make comments ignore number literal coloring
+\newcommand{\textcolordummy}[2]{#2}
+
+% mauve color
+\definecolor{Mauve}{rgb}{0.58,0,0.82}
+
+% specs base style
+\lstdefinestyle{specs}{
+	% general
+	sensitive=false,
+	frame=lines,
+    breaklines=false,
+    tabsize=2,
+	showspaces=false,
+  	showstringspaces=false,
+    % line numbers
+    numbers=left,
+	numberstyle=\tiny\color{Gray},
+	numbersep=2pt,
+    % style
+    basicstyle=\scriptsize\ttfamily,
+    identifierstyle=\color{Black}\let\textcolor\textcolordummy,
+    keywordstyle={[1]\color{NavyBlue}\bfseries},
+    keywordstyle={[2]\color{BurntOrange}\bfseries},
+	keywordstyle={[3]\color{NavyBlue}\bfseries},
+    keywordstyle={[4]\color{BurntOrange}\bfseries},
+    keywordstyle={[5]\color{Mauve}\bfseries},
+    keywordstyle={[6]\color{Gray}\bfseries},
+    ndkeywordstyle=\color{Gray}\bfseries,
+    stringstyle=\color{Red}\ttfamily,
+    commentstyle=\color{ForestGreen}\ttfamily\let\textcolor\textcolordummy,
+}
+
+% JavaScript language
+\lstdefinelanguage{JavaScript}{
+	% keywords
+	keywords={for, typeof, new, true, false, catch, return, null, catch, switch, var, if, of, in, while, else, case, break, of, throw},
+	ndkeywords={class, export, boolean, implements, this},
+	% strings
+	morestring=[b]',
+	morestring=[b]",
+	% comments
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/}
+}
+
+% LARA language
+\lstdefinelanguage{LARA}[]{JavaScript}{
+	% keywords
+    keywords=[3]{import, select, end, apply, condition, input, output, dynamic},
+    keywords=[4]{def, insert, exec, before, after, call},
+    keywords=[5]{aspectdef, codedef},
+    keywords=[6]{$stmt,$call,$loop},
+    % delimiters
+    moredelim=[s][stringstyle]{\%\{}{\}\%},
+}

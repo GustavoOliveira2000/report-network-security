@@ -68,12 +68,27 @@ This section serves as the introduction to the work and it is likely the second 
 Additionally, you can have several subsections for topics such as the problem statement, the motivation for this work, and also any needed background information for unfamiliar readers. These can also be made into their own sections that follow the introduction. The problem statement is a short description of the problem that your work addresses, identifying the gaps between the current state and the desired future state. The motivation should sell the importance of this work and the reader should understand what is the impact of solving the identified problem.
 
 % % % % % % % % % % % % % % % % % % % % %
-% 	    ACTIVITIES AND PLAN
+% 	    Architectural Analysis
 % % % % % % % % % % % % % % % % % % % % %
-\section{Activities and Plan}
-\label{sec:activities}
-In this section you should present the temporal evolution of the project. Include any relevant diagrams or charts, and list the finished tasks, possibly comparing them to the list of expected tasks.
+\section{Architectural Analysis}
+\label{sec:ArchitecturalAnalysis}
+The European Digital Identity Wallet Architecture and Reference Framework (ARF) defines the technical and organizational foundation for a secure, interoperable, and privacy-preserving digital identity ecosystem across the European Union.
+It provides a modular architecture that ensures trust and interoperability among Member States while giving users full control over their digital identity credentials.
 
+According to Sections 4.1–4.3.1 of the ARF, the system is designed around a Wallet Unit that interfaces with external entities through standardized protocols.
+The architecture follows key design principles such as user-centricity, security- and privacy-by-design, and cross-border interoperability, ensuring that all components interact coherently within the regulatory scope of eIDAS 2.0 (Regulation 2024/1183).
+
+\subsection{Identity Management}
+Identity management in the ARF centers on the secure issuance, storage, and presentation of digital credentials, with a strong emphasis on user control and privacy. The Wallet Unit acts as the primary interface for users to manage their digital identities, supporting the storage of various types of credentials, including those issued by public authorities and private entities. The ARF mandates the use of strong authentication mechanisms, such as multi-factor authentication (MFA), to access the wallet and to authorize transactions. Furthermore, identity proofing and credential issuance are performed in compliance with eIDAS 2.0 requirements, ensuring high levels of assurance and interoperability across Member States~\cite{EU_ARF2024,EU_eIDAS2024}. The architecture also provides mechanisms for selective disclosure, allowing users to share only the minimum necessary information with relying parties, thereby enhancing privacy by design.
+
+\subsection{Trust Services}
+Trust services are fundamental to establishing and maintaining confidence in digital transactions within the European Digital Identity ecosystem. The ARF leverages qualified trust service providers (QTSPs) to deliver essential services such as electronic signatures, seals, timestamps, and electronic attestation of attributes. These services are integrated into the Wallet Unit, enabling users to sign documents, authenticate transactions, and verify the integrity and origin of data. The ARF ensures that trust services comply with the legal and technical requirements set out in eIDAS 2.0, including the use of qualified certificates and secure signature creation devices~\cite{EU_ARF2024,EU_eIDAS2024}. This integration supports cross-border recognition of trust services, facilitating seamless digital interactions throughout the EU.
+
+\subsection{Data Exchange Protocols}
+The ARF specifies standardized data exchange protocols to guarantee secure and interoperable communication between the Wallet Unit and external entities, such as issuers, verifiers, and other wallets. Protocols are based on open standards, including OpenID Connect (OIDC), SAML, and verifiable credential data models, which enable secure transmission of identity attributes and credentials. The framework mandates end-to-end encryption and mutual authentication to protect the confidentiality and integrity of exchanged data. Additionally, the protocols support consent management, ensuring that users are always informed and in control of the data shared with third parties~\cite{EU_ARF2024}. These measures promote interoperability and trust among diverse national and sectoral systems.
+
+\subsection{Summary}
+In summary, the ARF provides a robust architectural foundation for the European Digital Identity Wallet, addressing critical aspects such as identity management, trust services, and secure data exchange. By adhering to the principles of security, privacy, and interoperability, and by aligning with the regulatory framework of eIDAS 2.0, the ARF aims to foster a trustworthy and user-centric digital identity ecosystem across the EU~\cite{EU_ARF2024,EU_eIDAS2024}.
 % % % % % % % % % % % % % % % % % % % % %
 % 			YOUR SOLUTION
 % % % % % % % % % % % % % % % % % % % % %
@@ -119,21 +134,7 @@ In this section you present the main conclusions of your work in a summarized fo
 \label{sec:examples}
 This section, which you should delete later on, has examples on how to use some of Latex's most common features and environments.
 
-\begin{figure}
-    \begin{algorithmic}[1]
-    \Function{MemoizedFunction}{input}
-        \State $hash \gets \Call{HashFunction}{input}$
-        \State $<found,output> \gets \Call{Lookup}{hash, input}$
-        \If{$found=False$}
-            \State $output \gets \Call{OriginalFunction}{input}$
-            \State $\Call{Update}{hash, input, output}$
-        \EndIf
-        \State \Return $output$
-    \EndFunction
-  \end{algorithmic}
-  \caption{This is the algorithm caption.}
-  \label{alg:memoi}
-\end{figure}
+
 
 \Cref{alg:memoi} presents a basic algorithm using the \textit{algorithmic} environment for pseudo-code.
 
@@ -142,18 +143,14 @@ This is how you make an unumbered list:
     \item This is the first item;
     \item This is the second item;
     \item This is the final item.
+    \item asd
 \end{itemize}
 
 Whenever you cite someone else's work, you need to include a reference to the relevant source. This is how you make a citation~\cite{Michie1968}. You can also cite multiple sources at once like this~\cite{Strachey2000,Connors2000}. The references need to be present in the \textit{refs.bib} file.
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.8\columnwidth]{figures/lenna.png}
-    \caption{This is the figure caption.}
-    \label{fig:prof-motiv}
-\end{figure}
 
-\Cref{fig:prof-motiv} shows you how to include a figure. By default, Latex uses PNG or PDF formats for figures.
+
+ shows you how to include a figure. By default, Latex uses PNG or PDF formats for figures.
 
 If you need to include equations, you can use Latex's excellent math environments. Here is a simple example of an equation:
 \begin{equation}\label{eq:log}
@@ -163,12 +160,7 @@ where $c$ is a constant, $I$ is the input, $O$ is the output, and $i$ and $j$ ar
 
 You can use the acronym package to help manage acronyms. The first time you use an acronym, its full form will be displayed, e.g., \ac{DSL} or \ac{HPC}. However, the following times, only the short version will be used, as in \ac{DSL} or \ac{HPC}. You can also use the plural form of acronyms, e.g., \acp{DSL}. The list of known acronyms is defined in the preamble of the document.
 
-\begin{figure}[t]
- 	\centering
-	\lstinputlisting[boxpos=b,style=specs,language=C]{c/wrapper.c}
-	\caption{This is the code caption.}
-	\label{fig:code}
-\end{figure}
+
 
 If you want to include code, you can also do so by using the listings package. Here is an example of how to do it. \Cref{fig:code} presents an example of how to include source code.
 

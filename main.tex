@@ -44,7 +44,7 @@
 
 \author{Your Name}
 \affiliation{%
-  \institution{Department,\\University}
+  \institution{Department,\\Universidade}
   \city{City} 
   \country{Country} 
   \postcode{Postal Code}
@@ -79,6 +79,25 @@ It provides a modular architecture that ensures trust and interoperability among
 
 According to Sections 4.1–4.3.1 of the ARF, the system is designed around a Wallet Unit that interfaces with external entities through standardized protocols.
 The architecture follows key design principles such as user-centricity, security- and privacy-by-design, and cross-border interoperability, ensuring that all components interact coherently within the regulatory scope of eIDAS 2.0 (Regulation 2024/1183).
+
+\subsection{Design Principles}
+
+The EUDI Wallet Architecture and Reference Framework (ARF) establishes a set of core design principles that guide the development and deployment of the European Digital Identity ecosystem. These principles ensure that all architectural components — from the Wallet Unit to the trust infrastructure — operate in a consistent, secure, and interoperable manner across Member States~\cite{EU_ARF2024}.
+
+\subsubsection*{User-Centricity}
+At the heart of the ARF is the concept of user-centricity, which prioritizes the individual's control over their identity data and credentials. Users are empowered to manage, store, and selectively disclose their digital identity attributes directly from their Wallet, ensuring transparency and autonomy in every interaction. This design choice reflects the shift towards Self-Sovereign Identity (SSI) models, where individuals, rather than institutions, own and govern their identity information.
+
+\subsubsection*{Privacy- and Security-by-Design}
+Privacy and security are embedded as foundational architectural principles, rather than optional layers. The ARF mandates that Wallet implementations adopt strong cryptographic protections for both data at rest and in transit. Mechanisms such as secure cryptographic devices (WSCD), proof-of-possession tokens, and mutual authentication between parties mitigate risks such as impersonation, credential replay, and unauthorized access. These mechanisms align with the \textit{privacy-by-design} obligations set forth under the General Data Protection Regulation (GDPR), ensuring that personal data processing is minimized, consent-based, and auditable~\cite{EU_eIDAS2024}.
+
+\subsubsection*{Interoperability and Standardization}
+To guarantee seamless cross-border usage, the ARF integrates globally recognized technical standards. These include the W3C Verifiable Credentials (VC 2.0) model for credential structure, the OpenID4VCI and OpenID4VP protocols for issuance and presentation, and ISO/IEC 18013-5 for mobile identity documents. By aligning with established standards from the W3C, IETF, OIDF, and ETSI, the ARF ensures interoperability between different Wallet Providers, Member States, and service domains, enabling a cohesive European identity ecosystem.
+
+\subsubsection*{Modularity and Scalability}
+The architecture is designed to be modular, allowing individual components — such as the Wallet backend, trust services, and identity providers — to evolve independently while maintaining compatibility. This modularity also enables scalability, supporting future integration of new services (e.g., electronic payments or digital health credentials) without requiring structural redesign.
+
+\subsubsection*{Cross-Border Trust and Compliance}
+Finally, the ARF upholds a unified trust and compliance framework that binds all Member States under common security and certification requirements. Through Qualified Trust Service Providers (QTSPs) and the EU Trusted List Registry, the framework guarantees that any Wallet or credential issued in one Member State is legally recognized and technically verifiable in another. This fosters a truly pan-European digital identity ecosystem that balances innovation, trust, and regulatory compliance.
 
 \subsection{Identity Management}
 Identity management in the ARF centers on the secure issuance, storage, and presentation of digital credentials, with a strong emphasis on user control and privacy. The Wallet Unit acts as the primary interface for users to manage their digital identities, supporting the storage of various types of credentials, including those issued by public authorities and private entities. The ARF mandates the use of strong authentication mechanisms, such as multi-factor authentication (MFA), to access the wallet and to authorize transactions. Furthermore, identity proofing and credential issuance are performed in compliance with eIDAS 2.0 requirements, ensuring high levels of assurance and interoperability across Member States~\cite{EU_ARF2024,EU_eIDAS2024}. The architecture also provides mechanisms for selective disclosure, allowing users to share only the minimum necessary information with relying parties, thereby enhancing privacy by design.

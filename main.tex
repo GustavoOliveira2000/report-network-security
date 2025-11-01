@@ -372,6 +372,221 @@ The EUDI Wallet's compliance with security, privacy, and interoperability requir
 These three pillars of compliance are not independent but deeply interdependent. Security mechanisms such as cryptographic attestations and certified hardware components provide the technical foundation for privacy-enhancing features like selective disclosure and unlinkability. Interoperability standards ensure that security and privacy guarantees are consistently implemented across diverse Wallet Solutions and can be reliably verified by any compliant Relying Party. The harmonized legal framework of eIDAS 2.0, combined with implementing regulations and technical specifications in the ARF, creates a comprehensive governance structure that balances innovation with protection of fundamental rights.
 
 The EUDI Wallet represents a landmark initiative in digital identity, demonstrating that it is possible to combine user sovereignty, cross-border interoperability, and regulatory compliance within a single, coherent architecture~\cite{Gataca_ARF_SSI,ISC2_PrivacyDataSovereignty}. By adhering to these compliance frameworks, the wallet aims to foster widespread adoption among citizens, businesses, and governments, ultimately realizing the vision of a secure, privacy-respecting, and universally accepted digital identity for all Europeans~\cite{EU_ARF2024,EU_eIDAS2024}.
+
+% % % % % % % % % % % % % % % % % % % % %
+% 			Roles and Responsibilities of Entities
+% % % % % % % % % % % % % % % % % % % % %
+\section{Roles and Responsibilities of Entities}
+\label{sec:roles}
+The European Digital Identity Wallet Ecosystem (Echosystem) is composed of various entities that play crucial roles in the functioning and management of the digital identity system. These entities include Users, Issuers, Providers, and Supervisory and Oversight Authorities. 
+Each entity has specific roles and responsibilities that ensure the proper operation of the system while adhering to established regulations and standards.
+In this section, we will take a deeper look at the different entities, their roles, and their responsibilities within the EUDI Wallet Ecosystem.
+\subsection{Entities}
+Entities, are moustly organizations, that participate in the EUDI Wallet Ecosystem by providing services, issuing credentials, or overseeing compliance with regulations.
+According to the European Digital Identity Wallet Architecture and Reference Framework (ARF v2.6.0) {colocar referencia}, we have almoust 20 diferent entities ivolved in the Ecosystem, but we will divide them in User, Issuer, Providers and Supervisory and Oversight Authority for simplification purposes when later we talk about rulles and responsibilities.
+\begin{itemize}
+
+  % 1. USER DOMAIN
+  \item \textbf{User Domain}
+    \begin{itemize}
+      \item \textbf{User of Wallet Unit (UoW):}
+      The natural or legal person to whom a Wallet Unit is issued and who uses it to store, manage, and present digital credentials under their control.
+    \end{itemize}
+
+  % 2. WALLET PROVISIONING AND OPERATION
+  \item \textbf{Wallet Provisioning and Operation}
+    \begin{itemize}
+      \item \textbf{Wallet Provider (WP):}
+      An organization that develops, deploys, and maintains Wallet Units in compliance with the ARF’s security, privacy, and interoperability requirements.
+      \item \textbf{Device Manufacturer and Related Subsystems Provider (DMRSP):}
+      Manufacturer or supplier of secure hardware, Secure Elements (SE), Trusted Execution Environments (TEE), and related components used within Wallet Units.
+    \end{itemize}
+
+  % 3. ISSUANCE AND ATTRIBUTE PROVISIONING
+  \item \textbf{Issuance and Attribute Provisioning}
+    \begin{itemize}
+      \item \textbf{Person Identification Data Provider (PIDP):}
+      Entity authorized to issue Person Identification Data (PID) credentials based on verified identity data from authoritative registers.
+      \item \textbf{Qualified Electronic Attestation of Attributes Provider (QEAA-P):}
+      Qualified trust service provider issuing Qualified Electronic Attestations of Attributes (QEAAs) under eIDAS 2.0 and ARF governance.
+      \item \textbf{Electronic Attestation of Attributes Provider (EAA-P):}
+      Provider issuing non-qualified Electronic Attestations of Attributes (EAAs) in line with ARF interoperability specifications.
+      \item \textbf{Public Sector EAA Provider (PuB-EAA-P):}
+      Public authority or delegated entity issuing EAAs based on authentic government registers or administrative databases.
+      \item \textbf{Authentic Source (AS):}
+      Authoritative registry or database (e.g., population, tax, vehicle, education) holding verified identity or attribute data used by issuers.
+    \end{itemize}
+
+  % 4. RELYING AND VERIFYING PARTIES
+  \item \textbf{Relying and Verifying Parties}
+    \begin{itemize}
+      \item \textbf{Relying Party (RP):}
+      Public or private entity that requests, receives, and verifies credentials or attributes from Wallet Users to provide access or services.
+      \item \textbf{Access Certificate Authority (ACA):}
+      Authority that issues and manages digital certificates used for mutual authentication between Wallets, Providers, and Relying Parties.
+    \end{itemize}
+
+  % 5. TRUST AND CONFORMITY INFRASTRUCTURE
+  \item \textbf{Trust and Conformity Infrastructure}
+    \begin{itemize}
+      \item \textbf{Registrar (REG):}
+      Entity responsible for managing registries, identifiers, and metadata for participants to ensure technical discoverability and resolution.
+      \item \textbf{Provider of Registration Certificates (PRC):}
+      Entity that issues registration certificates binding organizational or technical identities to registered participants in the EUDI ecosystem.
+    \end{itemize}
+
+  % 6. TECHNICAL CERTIFICATION AND EVALUATION
+  \item \textbf{Technical Certification and Evaluation}
+    \begin{itemize}
+      \item \textbf{Conformity Assessment Body (CAB):}
+      Independent, accredited organization that evaluates Wallets, Providers, and components for compliance with the ARF and applicable standards.
+      \item \textbf{Attestation Scheme Provider (ASP):}
+      Entity that defines evaluation and attestation schemes, assurance levels, and certification criteria for use by CABs and accreditation bodies.
+    \end{itemize}
+
+  % 7. SUPERVISORY AND ACCREDITATION AUTHORITIES
+  \item \textbf{Supervisory and Accreditation Authorities}
+    \begin{itemize}
+      \item \textbf{Supervisory Body (SB):}
+      National authority overseeing Wallet Providers, PID Providers, and Attribute Providers to ensure regulatory compliance under eIDAS 2.0.
+      \item \textbf{National Accreditation Body (NAB):}
+      National authority accrediting CABs and ensuring the competence, impartiality, and consistency of conformity assessments.
+      \item \textbf{Trusted List Provider (TLP):}
+      Entity maintaining and publishing trusted lists of qualified and supervised services for discoverability and trust verification.
+    \end{itemize}
+
+  % 8. EUROPEAN GOVERNANCE
+  \item \textbf{European Governance}
+    \begin{itemize}
+      \item \textbf{European Commission (EC):}
+      The EU executive institution responsible for maintaining the EUDI Toolbox and ARF, ensuring policy coherence, interoperability, and governance of the entire ecosystem.
+    \end{itemize}
+
+\end{itemize}
+\subsection{Roles}
+Each entity plays a specific role within the EUDI Wallet Ecosystem, contributing to its overall functionality and governance.
+In this section we will take a deeper look focused on the main entities, dividing them in User, Issuer, Provider, Trust, Governance and Supervisory roles.
+\begin{itemize}
+
+  % USER ROLE
+  \item \textbf{User Role:}
+    \begin{itemize}
+      \item Manage and control personal digital identity credentials stored in the Wallet Unit.
+      \item Provide consent for data sharing with Relying Parties.
+      \item Authenticate to access services using the Wallet.
+    \end{itemize}
+
+  % ISSUER ROLES
+  \item \textbf{Issuer Roles:}
+    \begin{itemize}
+      \item Verify user identities and issue Person Identification Data (PID) credentials.
+      \item Issue Electronic Attestations of Attributes (EAAs) based on verified data from authentic sources.
+      \item Ensure compliance with ARF standards during issuance processes.
+    \end{itemize}
+
+  % PROVIDER ROLES
+  \item \textbf{Provider Roles:}
+    \begin{itemize}
+      \item Develop, deploy, and maintain Wallet Units in accordance with ARF requirements.
+      \item Implement strong authentication and security measures for Wallet access.
+      \item Ensure interoperability with other ecosystem entities.
+    \end{itemize}
+
+  % TRUST ROLES
+  \item \textbf{Trust Roles:}
+    \begin{itemize}
+      \item Manage trust registries and metadata for ecosystem participants.
+      \item Issue and manage access certificates for mutual authentication.
+      \item Facilitate cross-border trust verification among Member States.
+    \end{itemize}
+
+  % GOVERNANCE ROLES
+  \item \textbf{Governance Roles:}
+    \begin{itemize}
+      \item Maintain the EUDI Toolbox and ARF to ensure policy coherence.
+      \item Oversee ecosystem governance and compliance across Member States.
+      \item Promote interoperability and standardization within the ecosystem.
+    \end{itemize}
+
+  % SUPERVISORY ROLES
+  \item \textbf{Supervisory Roles:}
+    \begin{itemize}
+      \item Monitor compliance of Wallet Providers and Issuers with regulatory requirements.
+      \item Accredit Conformity Assessment Bodies (CABs) for technical evaluations.
+      \item Publish trusted lists of qualified services for discoverability and trust verification.
+    \end{itemize}
+\end{itemize} 
+\subsection{Responsibilities}
+Each entity has legally binding responsibilities under the eIDAS 2.0 proposal and ARF v2.6.0 to ensure the secure, interoperable, and privacy-preserving operation of the EUDI Wallet Ecosystem.:
+Here we look a to them the same way as in Rules, dividing them in User, Issuer, Provider, Trust, Governance and Supervisory responsibilities.
+
+This framework has defined responsibilities for each entity to ensure accountability and compliance with regulatory requirements.
+\begin{itemize}
+
+  % USER RESPONSIBILITIES
+  \item \textbf{User Responsibilities:}
+    \begin{itemize}
+      \item Safeguard Wallet credentials and private keys.
+      \item Provide accurate information during identity proofing.
+      \item Manage consent for data sharing with Relying Parties.
+    \end{itemize}
+
+  % ISSUER RESPONSIBILITIES
+  \item \textbf{Issuer Responsibilities:}
+    \begin{itemize}
+      \item Verify user identities before issuing credentials.
+      \item Ensure credentials comply with ARF standards.
+      \item Maintain secure issuance processes.
+    \end{itemize}
+
+  % PROVIDER RESPONSIBILITIES
+  \item \textbf{Provider Responsibilities:}
+    \begin{itemize}
+      \item Develop and maintain secure Wallet Units.
+      \item Implement strong authentication mechanisms.
+      \item Ensure interoperability with other ecosystem entities.
+    \end{itemize}
+
+  % TRUST RESPONSIBILITIES
+  \item \textbf{Trust Responsibilities:}
+    \begin{itemize}
+      \item Manage trust registries and metadata.
+      \item Issue and manage access certificates.
+      \item Facilitate cross-border trust verification.
+    \end{itemize}
+
+  % GOVERNANCE RESPONSIBILITIES
+  \item \textbf{Governance Responsibilities:}
+    \begin{itemize}
+      \item Maintain the EUDI Toolbox and ARF.
+      \item Ensure policy coherence across Member States.
+      \item Oversee ecosystem governance and compliance.
+    \end{itemize}
+
+  % SUPERVISORY RESPONSIBILITIES
+  \item \textbf{Supervisory Responsibilities:}
+    \begin{itemize}
+      \item Monitor compliance of Wallet Providers and Issuers.
+      \item Accredit Conformity Assessment Bodies.
+      \item Publish trusted lists of qualified services.
+    \end{itemize}
+
+
+
+\end{itemize}
+
+\subsection{Summary}
+
+The European Digital Identity Wallet Ecosystem is a complex network of entities, each with specific roles and responsibilities that ensure the secure, interoperable, and privacy-preserving operation of the system. 
+Users manage their digital identities and provide consent for data sharing, while Issuers verify identities and issue credentials in compliance with established standards. 
+Issuers include Person Identification Data Providers and Electronic Attestation of Attributes Providers, who ensure that credentials are issued based on verified data from authentic sources. 
+Providers develop and maintain Wallet Units, implementing robust security measures to protect user data.
+Supervisory Authorities monitor compliance and accredit Conformity Assessment Bodies to maintain trust within the ecosystem.
+Then the European Commission oversees the governance of the ecosystem, ensuring policy coherence and promoting interoperability across Member States.
+
+This eudi 2.0 and ARF v2.6.0 framework establishes clear accountability for each entity, fostering a trustworthy digital identity environment that empowers users while adhering to regulatory requirements.
+
+Only through the collaborative efforts of all entities can the EUDI Wallet Ecosystem achieve its goals of security, privacy, and interoperability, ultimately providing a seamless and user-centric digital identity experience for citizens and businesses across Europe.
 % % % % % % % % % % % % % % % % % % % % %
 % 			CONCLUSIONS
 % % % % % % % % % % % % % % % % % % % % %

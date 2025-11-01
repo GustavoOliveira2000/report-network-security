@@ -1,0 +1,281 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{19}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Commission(2024)]%
+        {EU_ARF2024}
+\bibfield{author}{\bibinfo{person}{European Commission}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \bibinfo{title}{European Digital Identity Wallet Architecture and Reference Framework}.
+\newblock \bibinfo{howpublished}{\url{https://github.com/eu-digital-identity-wallet}}.
+\newblock
+\newblock
+\shownote{Accessed: 2025-10-29}.
+
+
+\bibitem[Consortium(2025a)]%
+        {Potential_PrivacyDesign}
+\bibfield{author}{\bibinfo{person}{Digital Identity Wallet~Project Consortium}.} \bibinfo{year}{2025}\natexlab{a}.
+\newblock \bibinfo{title}{EU Digital Identity Wallet Project: Guiding principles}.
+\newblock
+\urldef\tempurl%
+\url{https://digital-identity-wallet.eu/project/guiding-principles}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Describes the privacy‑by‑design principle: data minimisation and enabling selective disclosure, using zero‑knowledge proofs and robust safeguards to prevent tracking or linkability of the holder}.
+
+
+\bibitem[Consortium(2025b)]%
+        {Potential_UserCentricity}
+\bibfield{author}{\bibinfo{person}{Digital Identity Wallet~Project Consortium}.} \bibinfo{year}{2025}\natexlab{b}.
+\newblock \bibinfo{title}{EU Digital Identity Wallet Project: Guiding principles}.
+\newblock
+\urldef\tempurl%
+\url{https://digital-identity-wallet.eu/project/guiding-principles}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{The project outlines user‑centricity as a guiding principle, emphasising that citizens have full control over their attributes and data and must have transparency regarding what is shared and with whom}.
+
+
+\bibitem[Consortium(2025c)]%
+        {Potential_SecurityDesign}
+\bibfield{author}{\bibinfo{person}{Digital Identity Wallet~Project Consortium}.} \bibinfo{year}{2025}\natexlab{c}.
+\newblock \bibinfo{title}{EU Digital Identity Wallet Project: Guiding principles}.
+\newblock
+\urldef\tempurl%
+\url{https://digital-identity-wallet.eu/project/guiding-principles}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Highlights security‑by‑design: integrating strong security mechanisms from the outset to protect identity data stored and transmitted through the wallet}.
+
+
+\bibitem[Consortium(2024a)]%
+        {ARF_SelectDisclosureDefinition}
+\bibfield{author}{\bibinfo{person}{European Digital Identity~Wallet Consortium}.} \bibinfo{year}{2024}\natexlab{a}.
+\newblock \bibinfo{title}{European Digital Identity Wallet Architecture and Reference Framework: Definitions section}.
+\newblock
+\urldef\tempurl%
+\url{https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Defines selective disclosure as the capability for the EUDI Wallet to present only a subset of user attributes from person identification data or electronic attestations of attributes}.
+
+
+\bibitem[Consortium(2024b)]%
+        {ARF_AttestationSelectiveDisclosure}
+\bibfield{author}{\bibinfo{person}{European Digital Identity~Wallet Consortium}.} \bibinfo{year}{2024}\natexlab{b}.
+\newblock \bibinfo{title}{European Digital Identity Wallet Architecture and Reference Framework: Requirements for attestation issuance}.
+\newblock
+\urldef\tempurl%
+\url{https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Mandates that Person Identification Data and (Qualified) Electronic Attestations of Attributes must support selective disclosure using SD‑JWT or mobile security objects}.
+
+
+\bibitem[da~Rocha~Ribeiro(2023)]%
+        {PortoThesis}
+\bibfield{author}{\bibinfo{person}{Gabriel~Leal da Rocha~Ribeiro}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{SSI Technology in the Context of eIDAS 2.0}.
+\newblock \bibinfo{howpublished}{Master’s thesis, University of Porto}.
+\newblock
+\urldef\tempurl%
+\url{https://repositorio-aberto.up.pt/bitstream/10216/156528/2/655820.pdf}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Explains that the core of the EUDI framework follows the SSI holder–issuer–verifier model; trusted attestation services and registries support verification}.
+
+
+\bibitem[DocuSign(2025)]%
+        {DocuSign_SelectDisclosure}
+\bibfield{author}{\bibinfo{person}{DocuSign}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{The European Digital Identity Wallet: Shaping Europe’s digital future}.
+\newblock
+\urldef\tempurl%
+\url{https://www.docusign.com/blog/european-digital-identity-wallet-future}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Blog post describing how the EUDI Wallet uses selective disclosure to prove attributes such as age without revealing full personal data; highlights that selective disclosure reduces fraud and gives users control over what they share}.
+
+
+\bibitem[Gataca(2022)]%
+        {Gataca_ARF_SSI}
+\bibfield{author}{\bibinfo{person}{Gataca}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \bibinfo{title}{Why the European Digital Identity Wallet needs Self‑Sovereign Identity principles}.
+\newblock
+\urldef\tempurl%
+\url{https://gataca.io/blog/the-european-digital-identity-wallet-architecture-reference-framework/}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Blog post outlining that the ARF includes SSI principles and highlights that the EUDI Wallet gives users complete control over their data, allowing them to decide what information to share, with whom and when}.
+
+
+\bibitem[Group(2025a)]%
+        {ZKPDiscussion_Recital15}
+\bibfield{author}{\bibinfo{person}{European Digital Identity~Cooperation Group}.} \bibinfo{year}{2025}\natexlab{a}.
+\newblock \bibinfo{title}{G – Zero Knowledge Proof, Discussion topics}.
+\newblock
+\urldef\tempurl%
+\url{https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/2.4.0/discussion-topics/g-zero-knowledge-proof/}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Recital 15 of the European Digital Identity Regulation emphasises that citizens must be able to request, select, store, delete and share identity data while enabling selective disclosure}.
+
+
+\bibitem[Group(2025b)]%
+        {ZKPDiscussion_Article5a}
+\bibfield{author}{\bibinfo{person}{European Digital Identity~Cooperation Group}.} \bibinfo{year}{2025}\natexlab{b}.
+\newblock \bibinfo{title}{G – Zero Knowledge Proof, Discussion topics}.
+\newblock
+\urldef\tempurl%
+\url{https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/2.4.0/discussion-topics/g-zero-knowledge-proof/}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Article 5a(16) of the regulation requires that the wallet prevents attestation providers or relying parties from tracking user behaviour and ensures unlinkability}.
+
+
+\bibitem[Group(2025c)]%
+        {ZKPDiscussion_Recital59}
+\bibfield{author}{\bibinfo{person}{European Digital Identity~Cooperation Group}.} \bibinfo{year}{2025}\natexlab{c}.
+\newblock \bibinfo{title}{G – Zero Knowledge Proof, Discussion topics}.
+\newblock
+\urldef\tempurl%
+\url{https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/2.4.0/discussion-topics/g-zero-knowledge-proof/}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Recital 59 defines selective disclosure and calls for privacy‑preserving technologies like zero‑knowledge proofs to enable validation of statements without revealing personal data}.
+
+
+\bibitem[ISC2(2025a)]%
+        {ISC2_PrivacyDataSovereignty}
+\bibfield{author}{\bibinfo{person}{ISC2}.} \bibinfo{year}{2025}\natexlab{a}.
+\newblock \bibinfo{title}{Explaining the EUDI Wallet – Europe’s digital identity revamp and what businesses must know about it}.
+\newblock
+\urldef\tempurl%
+\url{https://www.isc2.org/Insights/2025/04/Understanding-the-European-Digital-Identity-Wallet}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Article emphasising that the EUDI Wallet aims to ensure personal data sovereignty; credentials are stored in a decentralised wallet controlled by the user}.
+
+
+\bibitem[ISC2(2025b)]%
+        {ISC2_SelectDisclosureExample}
+\bibfield{author}{\bibinfo{person}{ISC2}.} \bibinfo{year}{2025}\natexlab{b}.
+\newblock \bibinfo{title}{Explaining the EUDI Wallet – Europe’s digital identity revamp and what businesses must know about it}.
+\newblock
+\urldef\tempurl%
+\url{https://www.isc2.org/Insights/2025/04/Understanding-the-European-Digital-Identity-Wallet}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{The article provides an example where a merchant can verify a customer is over 18 without seeing their full identity, demonstrating selective disclosure capabilities}.
+
+
+\bibitem[ISC2(2025c)]%
+        {ISC2_GuidingPrinciples}
+\bibfield{author}{\bibinfo{person}{ISC2}.} \bibinfo{year}{2025}\natexlab{c}.
+\newblock \bibinfo{title}{Explaining the EUDI Wallet – Europe’s digital identity revamp and what businesses must know about it}.
+\newblock
+\urldef\tempurl%
+\url{https://www.isc2.org/Insights/2025/04/Understanding-the-European-Digital-Identity-Wallet}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Lists the guiding principles for the EUDI Wallet: user‑centricity, interoperability, privacy by design and security by design}.
+
+
+\bibitem[ISC2(2025d)]%
+        {ISC2_ConsentRole}
+\bibfield{author}{\bibinfo{person}{ISC2}.} \bibinfo{year}{2025}\natexlab{d}.
+\newblock \bibinfo{title}{Explaining the EUDI Wallet – Europe’s digital identity revamp and what businesses must know about it}.
+\newblock
+\urldef\tempurl%
+\url{https://www.isc2.org/Insights/2025/04/Understanding-the-European-Digital-Identity-Wallet}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Describes how the wallet requires user consent before any attribute is shared and that users can use selective disclosure or zero‑knowledge proofs to share only necessary attributes}.
+
+
+\bibitem[Research(2025a)]%
+        {Finextra_SSI_Components}
+\bibfield{author}{\bibinfo{person}{Finextra Research}.} \bibinfo{year}{2025}\natexlab{a}.
+\newblock \bibinfo{title}{What makes the EUDI wallet self‑sovereign?}
+\newblock
+\urldef\tempurl%
+\url{https://www.finextra.com/blogposting/24356/what-makes-the-eudi-wallet-self-sovereign}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Opinion piece explaining that eIDAS2/EUDI adopts core SSI components: a user‑controlled wallet, verifiable credentials, selective disclosure, trust registries and cross‑EU interoperability}.
+
+
+\bibitem[Research(2025b)]%
+        {Finextra_SSI_Differences}
+\bibfield{author}{\bibinfo{person}{Finextra Research}.} \bibinfo{year}{2025}\natexlab{b}.
+\newblock \bibinfo{title}{What makes the EUDI wallet self‑sovereign?}
+\newblock
+\urldef\tempurl%
+\url{https://www.finextra.com/blogposting/24356/what-makes-the-eudi-wallet-self-sovereign}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{The article contrasts the EUDI wallet with classic SSI approaches, noting that it does not mandate a blockchain, provides legally binding signatures and operates under a public–private governance framework}.
+
+
+\bibitem[Union(2024)]%
+        {EU_eIDAS2024}
+\bibfield{author}{\bibinfo{person}{European Union}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \bibinfo{title}{Regulation (EU) 2024/1183 on electronic identification and trust services for electronic transactions (eIDAS 2.0)}.
+\newblock \bibinfo{howpublished}{\url{https://eur-lex.europa.eu/eli/reg/2024/1183/oj}}.
+\newblock
+\newblock
+\shownote{Official Journal of the European Union}.
+
+
+\end{thebibliography}

@@ -80,6 +80,7 @@ It provides a modular architecture that ensures trust and interoperability among
 According to Sections 4.1–4.3.1 of the ARF, the system is designed around a Wallet Unit that interfaces with external entities through standardized protocols.
 The architecture follows key design principles such as user-centricity, security- and privacy-by-design, and cross-border interoperability, ensuring that all components interact coherently within the regulatory scope of eIDAS 2.0 (Regulation 2024/1183).
 
+
 \subsection{Design Principles}
 
 The EUDI Wallet Architecture and Reference Framework (ARF) establishes a set of core design principles that guide the development and deployment of the European Digital Identity ecosystem. These principles ensure that all architectural components — from the Wallet Unit to the trust infrastructure — operate in a consistent, secure, and interoperable manner across Member States~\cite{EU_ARF2024}.
@@ -93,14 +94,82 @@ Privacy and security are embedded as foundational architectural principles, rath
 \subsubsection*{Interoperability and Standardization}
 To guarantee seamless cross-border usage, the ARF integrates globally recognized technical standards. These include the W3C Verifiable Credentials (VC 2.0) model for credential structure, the OpenID4VCI and OpenID4VP protocols for issuance and presentation, and ISO/IEC 18013-5 for mobile identity documents. By aligning with established standards from the W3C, IETF, OIDF, and ETSI, the ARF ensures interoperability between different Wallet Providers, Member States, and service domains, enabling a cohesive European identity ecosystem.
 
+% Será que todos esses Standarts são realmente adotados pela ARF ? - Conferir... 
+
 \subsubsection*{Modularity and Scalability}
 The architecture is designed to be modular, allowing individual components — such as the Wallet backend, trust services, and identity providers — to evolve independently while maintaining compatibility. This modularity also enables scalability, supporting future integration of new services (e.g., electronic payments or digital health credentials) without requiring structural redesign.
 
 \subsubsection*{Cross-Border Trust and Compliance}
+
 Finally, the ARF upholds a unified trust and compliance framework that binds all Member States under common security and certification requirements. Through Qualified Trust Service Providers (QTSPs) and the EU Trusted List Registry, the framework guarantees that any Wallet or credential issued in one Member State is legally recognized and technically verifiable in another. This fosters a truly pan-European digital identity ecosystem that balances innovation, trust, and regulatory compliance.
 
+
 \subsection{Identity Management}
-Identity management in the ARF centers on the secure issuance, storage, and presentation of digital credentials, with a strong emphasis on user control and privacy. The Wallet Unit acts as the primary interface for users to manage their digital identities, supporting the storage of various types of credentials, including those issued by public authorities and private entities. The ARF mandates the use of strong authentication mechanisms, such as multi-factor authentication (MFA), to access the wallet and to authorize transactions. Furthermore, identity proofing and credential issuance are performed in compliance with eIDAS 2.0 requirements, ensuring high levels of assurance and interoperability across Member States~\cite{EU_ARF2024,EU_eIDAS2024}. The architecture also provides mechanisms for selective disclosure, allowing users to share only the minimum necessary information with relying parties, thereby enhancing privacy by design.
+
+Identity management in the EUDI ecosystem covers the full lifecycle for creating, issuing, storing, presenting, and revoking identity credentials, with the Holder in control via the Wallet Unit. The ARF defines the organisational actors, technical components, and assurance processes that together enable high‑assurance, privacy‑preserving digital identity across Member States~\cite{EU_ARF2024}.
+
+\subsubsection*{Actors and Roles}
+\begin{itemize}
+  \item \textbf{PID Provider} — Public authority (or mandated entity) that verifies civil registry data in \textit{Authentic Sources} and issues \textit{Person Identification Data (PID)} to the Holder's Wallet~\cite{EU_ARF2024}.
+  \item \textbf{QEAA Provider} — Qualified Trust Service Provider (QTSP) authorised under eIDAS 2.0 to issue \textit{Qualified Electronic Attestations of Attributes (QEAAs)} with EU‑wide legal effect~\cite{EU_eIDAS2024}.
+  \item \textbf{Wallet Provider / Wallet Unit} — Certified provider and Wallet components (Wallet Instance, WSCA, WSCD, backend) that securely store credentials and enforce consent, selective disclosure, and cryptographic policy~\cite{EU_ARF2024}.
+  \item \textbf{Holder (User)} — Natural person (or legal entity representative) who controls the Wallet and decides which attributes to share, with whom, and when~\cite{EU_ARF2024}.
+  \item \textbf{Verifier (Relying Party)} — Public or private service that requests, receives, and validates presented attributes/credentials in line with sectoral policy and level‑of‑assurance requirements~\cite{EU_ARF2024}.
+\end{itemize}
+
+\paragraph{Credential types and sources.}
+\textbf{PID} are identity credentials backed by authoritative civil registers and issued by a PID Provider. 
+\textbf{Electronic Attestations of Attributes (EAAs)} are signed statements about specific user attributes (e.g., student status, professional licence) issued by trusted entities. 
+\textbf{QEAAs} are EAAs issued by QTSPs and enjoy the highest legal assurance under eIDAS 2.0~\cite{EU_eIDAS2024}. 
+\textbf{Authentic Sources} are official databases (e.g., civil, vehicle, professional registers) consulted by Issuers to verify facts prior to issuance; they are not the user's Wallet storage~\cite{EU_ARF2024}.
+
+\subsubsection*{Identification and Authentication}
+Using their Wallet Units, Users are able to:
+\begin{itemize}
+  \item Identify and authenticate to online and offline services using selective disclosure and explicit approval, ensuring that only necessary, user‑approved attributes are presented to Relying Parties (data minimisation)~\cite{EU_ARF2024}.
+  \item Authenticate Relying Parties (and, where applicable, other Wallet Units) to ensure attributes are presented only to authorised and trusted entities~\cite{EU_ARF2024}.
+  \item Onboard seamlessly with PID and (Q)EAA Providers by leveraging existing electronic identification schemes for secure registration~\cite{EU_ARF2024}.
+  \item Be informed whether a Relying Party is authorised/registered to receive the requested attributes~\cite{EU_ARF2024}.
+  \item Access a transaction log (dashboard) to review past interactions; request data erasure under GDPR Article 17; and report suspicious Relying Parties to the competent data protection authority~\cite{EU_ARF2024,EU_eIDAS2024}.
+\end{itemize}
+
+
+
+\subsection{Wallet Unit Architecture}
+
+The \textit{Wallet Unit Architecture} forms the technical core of the European Digital Identity Wallet, providing the secure environment in which users store and manage their digital credentials. According to the \textit{Architecture and Reference Framework (ARF)}~\cite{EU_ARF2024}, the Wallet Unit defines how identity credentials and cryptographic material are structured, protected, and exchanged, ensuring security, privacy, and interoperability across all Member States.
+
+\subsubsection*{Main Components}
+
+The ARF describes the Wallet Unit as a modular system composed of four tightly integrated elements that together enable secure identity management:
+
+\begin{itemize}
+    \item \textbf{Wallet Instance} — The application installed on the user’s personal device, serving as the interface for storing, managing, and presenting digital credentials. It acts as the \textit{Holder} in the identity lifecycle and enforces consent and selective disclosure policies.
+    \item \textbf{Wallet Secure Cryptographic Device (WSCD)} — A dedicated secure element or trusted execution environment that generates and protects cryptographic keys. The WSCD ensures that private keys never leave the secure boundary of the device and that signatures or encryption are performed in a controlled domain.
+    \item \textbf{Wallet Secure Cryptographic Application (WSCA)} — The logical component that mediates communication between the Wallet Instance and the WSCD. It handles cryptographic operations such as key usage, digital signatures, and proof-of-possession while enforcing security and privacy policies.
+    \item \textbf{Wallet Provider Backend} — The remote service operated by a certified Wallet Provider. It manages registration, credential lifecycle functions, and secure communication with PID and (Q)EAA Providers. Importantly, it cannot access personal data or private keys, aligning with GDPR and \textit{privacy-by-design} principles.
+\end{itemize}
+
+\subsubsection*{Security and Isolation Layers}
+
+The architecture enforces a clear separation between user-facing operations and cryptographic functions. The WSCD and WSCA operate within a trusted execution environment (TEE), preventing unauthorized access or tampering. Sensitive operations such as key generation, credential binding, and digital signing occur entirely within this secure domain. This isolation embodies the ARF’s \textit{security-by-design} and \textit{privacy-by-design} principles, ensuring that the user’s credentials remain protected from device-level or network-based attacks.
+
+\subsubsection*{Functional Interactions}
+
+During credential issuance or verification, the Wallet interacts with other ARF-defined entities through standardized protocols:
+
+\begin{enumerate}
+    \item The Wallet Instance initiates a credential issuance flow with a PID or (Q)EAA Provider using OpenID4VCI.
+    \item The WSCA and WSCD perform cryptographic proof-of-possession and bind the credential to the user’s secure device.
+    \item The credential, following the W3C Verifiable Credential model, is stored in the Wallet Instance.
+    \item When a Verifier requests validation, the Wallet presents only the necessary attributes through OpenID4VP, ensuring data minimization and explicit user consent.
+\end{enumerate}
+
+\subsubsection*{Interoperability and Compliance}
+
+The Wallet Unit’s modular architecture enables cross-border interoperability by adhering to open standards such as W3C Verifiable Credentials, OpenID4VCI, OpenID4VP, and ISO/IEC~18013-5. This ensures that Wallets developed by different Member States remain compatible while maintaining consistent levels of assurance and trust. The design aligns with the interoperability framework established under the \textit{eIDAS 2.0 Regulation}~\cite{EU_eIDAS2024}, which mandates mutual recognition of digital identities and trust services throughout the European Union.
+
+In summary, the \textit{Wallet Unit Architecture} provides the operational foundation of the EUDI Wallet. By combining secure cryptography, privacy-preserving design, and interoperability standards, it realizes the ARF’s vision of a secure, user-controlled, and cross-border digital identity ecosystem for Europe.
 
 \subsection{Trust Services}
 Trust services are fundamental to establishing and maintaining confidence in digital transactions within the European Digital Identity ecosystem. The ARF leverages qualified trust service providers (QTSPs) to deliver essential services such as electronic signatures, seals, timestamps, and electronic attestation of attributes. These services are integrated into the Wallet Unit, enabling users to sign documents, authenticate transactions, and verify the integrity and origin of data. The ARF ensures that trust services comply with the legal and technical requirements set out in eIDAS 2.0, including the use of qualified certificates and secure signature creation devices~\cite{EU_ARF2024,EU_eIDAS2024}. This integration supports cross-border recognition of trust services, facilitating seamless digital interactions throughout the EU.

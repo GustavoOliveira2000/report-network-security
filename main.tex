@@ -53,7 +53,7 @@
 
 
 \begin{abstract}
-This is the abstract. Here, you should provide a short summary of the entire work. You should include the following elements: your research problem and objectives, your methods, your key results, and your conclusion. Aim for 150 to 300 words.
+
 \end{abstract}
 
 \keywords{Your, Keywords, Go, Here}
@@ -65,9 +65,7 @@ This is the abstract. Here, you should provide a short summary of the entire wor
 % % % % % % % % % % % % % % % % % % % % %
 \section{Introduction}
 \label{sec:intro}
-This section serves as the introduction to the work and it is likely the second thing readers will focus on, after the abstract. This section should contextualize your work, introducing the topic and the expected results. Usually, it is also in this section that authors include a brief summary of the main contributions of the work.
 
-Additionally, you can have several subsections for topics such as the problem statement, the motivation for this work, and also any needed background information for unfamiliar readers. These can also be made into their own sections that follow the introduction. The problem statement is a short description of the problem that your work addresses, identifying the gaps between the current state and the desired future state. The motivation should sell the importance of this work and the reader should understand what is the impact of solving the identified problem.
 
 % % % % % % % % % % % % % % % % % % % % %
 % 	    Architectural Analysis
@@ -92,17 +90,17 @@ At the heart of the ARF is the concept of user-centricity, which prioritizes the
 Privacy and security are embedded as foundational architectural principles, rather than optional layers. The ARF mandates that Wallet implementations adopt strong cryptographic protections for both data at rest and in transit. Mechanisms such as secure cryptographic devices (WSCD), proof-of-possession tokens, and mutual authentication between parties mitigate risks such as impersonation, credential replay, and unauthorized access. These mechanisms align with the \textit{privacy-by-design} obligations set forth under the General Data Protection Regulation (GDPR), ensuring that personal data processing is minimized, consent-based, and auditable~\cite{EU_eIDAS2024}.
 
 \subsubsection*{Interoperability and Standardization}
-To guarantee seamless cross-border usage, the ARF integrates globally recognized technical standards. These include the W3C Verifiable Credentials (VC 2.0) model for credential structure, the OpenID4VCI and OpenID4VP protocols for issuance and presentation, and ISO/IEC 18013-5 for mobile identity documents. By aligning with established standards from the W3C, IETF, OIDF, and ETSI, the ARF ensures interoperability between different Wallet Providers, Member States, and service domains, enabling a cohesive European identity ecosystem.
+To guarantee seamless cross-border usage, the ARF relies on specific open standards it cites explicitly. In particular, it requires support for the \emph{W3C Verifiable Credentials Data Model} for credential representation and the \emph{ISO/IEC 18013-5:2021} mDL/mdoc model (Sec.~5.6). For protocol flows, the ARF specifies the use of OpenID for Verifiable Credential Issuance (OpenID4VCI) to handle credential issuance, and OpenID for Verifiable Presentations (OpenID4VP) to support credential presentation, as defined in Sections 5.6.1.2 and 5.6.1.3 of the ARF
+. For the trust layer, it references qualified certificates and trust lists under the \emph{ETSI EN 319 4xx} family within the trust infrastructure (Chapter~6), ensuring legal assurance and cross-border recognition under eIDAS~\cite{EU_ARF2024,EU_eIDAS2024}.
 
+\subsubsection*{Accessibility}
+
+According to Section~4.2.2 of the \textit{Architecture and Reference Framework (ARF)}~\cite{EU_ARF2024}, accessibility is a fundamental design principle ensuring that the European Digital Identity Wallet (EUDI Wallet) can be used by all individuals, regardless of their abilities or specific needs. The ARF requires that Wallet implementations comply with the \textit{Web Accessibility Directive (EU) 2016/2102} and related European standards such as \textit{EN~301~549}, which define accessibility requirements for ICT products and services.
+
+This principle mandates that the Wallet’s user interfaces, authentication mechanisms, and onboarding procedures are designed to be perceivable, operable, understandable, and robust for users with disabilities. Accessibility considerations must be applied consistently across all device types and operational contexts, including both online and offline usage scenarios.
+
+In practice, this ensures that every EU citizen—independent of physical, sensory, or cognitive limitations—can securely access and use their digital identity, reinforcing inclusiveness and equal participation in the digital single market.
 % Será que todos esses Standarts são realmente adotados pela ARF ? - Conferir... 
-
-\subsubsection*{Modularity and Scalability}
-The architecture is designed to be modular, allowing individual components — such as the Wallet backend, trust services, and identity providers — to evolve independently while maintaining compatibility. This modularity also enables scalability, supporting future integration of new services (e.g., electronic payments or digital health credentials) without requiring structural redesign.
-
-\subsubsection*{Cross-Border Trust and Compliance}
-
-Finally, the ARF upholds a unified trust and compliance framework that binds all Member States under common security and certification requirements. Through Qualified Trust Service Providers (QTSPs) and the EU Trusted List Registry, the framework guarantees that any Wallet or credential issued in one Member State is legally recognized and technically verifiable in another. This fosters a truly pan-European digital identity ecosystem that balances innovation, trust, and regulatory compliance.
-
 
 \subsection{Identity Management}
 
@@ -172,13 +170,30 @@ The Wallet Unit’s modular architecture enables cross-border interoperability b
 In summary, the \textit{Wallet Unit Architecture} provides the operational foundation of the EUDI Wallet. By combining secure cryptography, privacy-preserving design, and interoperability standards, it realizes the ARF’s vision of a secure, user-controlled, and cross-border digital identity ecosystem for Europe.
 
 \subsection{Trust Services}
-Trust services are fundamental to establishing and maintaining confidence in digital transactions within the European Digital Identity ecosystem. The ARF leverages qualified trust service providers (QTSPs) to deliver essential services such as electronic signatures, seals, timestamps, and electronic attestation of attributes. These services are integrated into the Wallet Unit, enabling users to sign documents, authenticate transactions, and verify the integrity and origin of data. The ARF ensures that trust services comply with the legal and technical requirements set out in eIDAS 2.0, including the use of qualified certificates and secure signature creation devices~\cite{EU_ARF2024,EU_eIDAS2024}. This integration supports cross-border recognition of trust services, facilitating seamless digital interactions throughout the EU.
+
+Trust services form the foundation of the EUDI ecosystem’s trust and legal assurance layer. According to the \textit{Architecture and Reference Framework (ARF)}~\cite{EU_ARF2024}, these services are delivered by \textit{Qualified Trust Service Providers (QTSPs)} as defined under \textit{eIDAS~2.0}~\cite{EU_eIDAS2024}. QTSPs are responsible for issuing and managing trust elements such as qualified certificates, electronic signatures, seals, timestamps, and electronic attestations of attributes (QEAAs). These mechanisms ensure authenticity, integrity, and non-repudiation across all digital interactions within the EUDI Wallet ecosystem.
+
+The ARF (Chapter~6) establishes a dedicated \textit{Trust Infrastructure} that connects Wallet Providers, PID Providers, and (Q)EAA Providers through certified and traceable trust anchors. This infrastructure uses qualified certificates conforming to the \textit{ETSI~EN~319~4xx} family of standards to guarantee cryptographic binding, certificate validation, and cross-border recognition. Each trust service must be registered in the EU Trusted List (EUTL), enabling automatic verification of certificates and signatures by Wallets and Verifiers.
+
+Within the Wallet Unit, trust services support critical functionalities including identity attestation, digital signing, and validation of credentials. The ARF requires that Qualified Electronic Signatures (QES) and Qualified Electronic Seals (QSeal) be supported, ensuring that documents or credentials signed through the Wallet carry the same legal effect as handwritten signatures across all Member States. Time-stamping services provide verifiable proof of when a transaction or attestation occurred, complementing the integrity guarantees of qualified certificates.
+
+Together, these trust mechanisms enable the Wallet to operate within a unified European trust framework, ensuring that any credential, signature, or attestation issued under eIDAS~2.0 is legally recognized and technically verifiable throughout the EU. This alignment with the ETSI and eIDAS standards provides the foundation for mutual trust, legal certainty, and secure cross-border interoperability within the European Digital Identity ecosystem.
 
 \subsection{Data Exchange Protocols}
-The ARF specifies standardized data exchange protocols to guarantee secure and interoperable communication between the Wallet Unit and external entities, such as issuers, verifiers, and other wallets. Protocols are based on open standards, including OpenID Connect (OIDC), SAML, and verifiable credential data models, which enable secure transmission of identity attributes and credentials. The framework mandates end-to-end encryption and mutual authentication to protect the confidentiality and integrity of exchanged data. Additionally, the protocols support consent management, ensuring that users are always informed and in control of the data shared with third parties~\cite{EU_ARF2024}. These measures promote interoperability and trust among diverse national and sectoral systems.
+
+The \textit{Architecture and Reference Framework (ARF)}~\cite{EU_ARF2024} defines standardized data exchange protocols to ensure secure, interoperable, and privacy-preserving communication between the Wallet Unit and external entities such as PID Providers, (Qualified) EAA Providers, Verifiers, and other Wallets. These interactions are based on open protocols explicitly mentioned in the ARF, namely \textit{OpenID for Verifiable Credential Issuance (OpenID4VCI)} for credential issuance (Sec.~5.6.1.2) and \textit{OpenID for Verifiable Presentations (OpenID4VP)} for credential presentation (Sec.~5.6.1.3). Both protocols build upon the OAuth~2.0 and OpenID Connect frameworks to provide standardized, secure, and interoperable exchanges of verifiable credentials.
+
+For proximity and offline scenarios, the ARF specifies the use of \textit{ISO/IEC~18013-5:2021}~\cite{EU_ARF2024}, which defines the mobile document (\textit{mdoc}) model for secure local credential presentation over interfaces such as NFC, BLE, or QR codes. These mechanisms enable the Wallet to operate even when network connectivity is unavailable, ensuring usability across all environments. All credential exchanges—whether online or offline—must ensure end-to-end confidentiality, integrity, and authenticity through cryptographic protections and mutual authentication between the involved entities.
+
+The ARF also mandates that data exchanges comply with principles of user consent and data minimisation. Each transmission of attributes or credentials must be explicitly approved by the Holder through the Wallet interface, ensuring that only necessary information is shared with Relying Parties. This aligns with the privacy-by-design and GDPR compliance principles established under eIDAS~2.0~\cite{EU_eIDAS2024}. Together, these protocol requirements guarantee secure and interoperable data flows across all Member States, supporting both cross-border trust and user sovereignty in the European Digital Identity ecosystem.
 
 \subsection{Summary}
-In summary, the ARF provides a robust architectural foundation for the European Digital Identity Wallet, addressing critical aspects such as identity management, trust services, and secure data exchange. By adhering to the principles of security, privacy, and interoperability, and by aligning with the regulatory framework of eIDAS 2.0, the ARF aims to foster a trustworthy and user-centric digital identity ecosystem across the EU~\cite{EU_ARF2024,EU_eIDAS2024}.
+
+The \textit{Architectural Analysis} of the European Digital Identity Wallet demonstrates how the \textit{Architecture and Reference Framework (ARF)} integrates security, interoperability, and user empowerment into a cohesive ecosystem governed by \textit{eIDAS~2.0}. Each architectural layer—from identity management and trust services to data exchange protocols—contributes to a unified model of digital identity that is verifiable, privacy-preserving, and legally enforceable across all Member States.
+
+By combining open standards such as the W3C Verifiable Credentials, ISO/IEC~18013-5, and OpenID4VCI/4VP protocols with qualified trust services under the \textit{ETSI~EN~319~4xx} standards, the ARF establishes a harmonised foundation for secure credential issuance, authentication, and validation. This architecture embodies the convergence of \textit{Self-Sovereign Identity (SSI)} principles with institutional trust, ensuring that European citizens retain sovereignty over their personal data while benefiting from legally recognised and interoperable digital identities~\cite{EU_ARF2024,EU_eIDAS2024}.
+
+In essence, the EUDI Wallet represents a hybrid identity framework: technically decentralised yet legally anchored, user-centric yet institutionally verifiable. It operationalises the vision of the European Union’s digital single market—where trust, privacy, and interoperability coexist under a common regulatory and technological architecture.
 
 % % % % % % % % % % % % % % % % % % % % %
 %        SELF-SOVEREIGN PRINCIPLES
@@ -225,6 +240,7 @@ Furthermore, the EUDI Wallet operates within a hybrid public-private governance 
 \subsection{Summary}
 
 The EUDI Wallet represents a synthesis of SSI principles and regulatory compliance, embedding user control, verifiable attestations, selective disclosure, and privacy-enhancing cryptography within a unified legal framework. By combining privacy-preserving techniques with trust registries and qualified service providers, the ARF enables European citizens to prove identity attributes across borders while maintaining sovereignty over their personal information~\cite{EU_ARF2024,EU_eIDAS2024}. The result is a hybrid identity system that empowers individuals, protects privacy, and fosters cross-border interoperability within the EU's digital single market.
+
 % % % % % % % % % % % % % % % % % % % % %
 % COMPLIANCE WITH SECURITY, PRIVACY, AND INTEROPERABILITY
 % % % % % % % % % % % % % % % % % % % % %
@@ -357,100 +373,13 @@ These three pillars of compliance are not independent but deeply interdependent.
 
 The EUDI Wallet represents a landmark initiative in digital identity, demonstrating that it is possible to combine user sovereignty, cross-border interoperability, and regulatory compliance within a single, coherent architecture~\cite{Gataca_ARF_SSI,ISC2_PrivacyDataSovereignty}. By adhering to these compliance frameworks, the wallet aims to foster widespread adoption among citizens, businesses, and governments, ultimately realizing the vision of a secure, privacy-respecting, and universally accepted digital identity for all Europeans~\cite{EU_ARF2024,EU_eIDAS2024}.
 % % % % % % % % % % % % % % % % % % % % %
-% 			YOUR SOLUTION
-% % % % % % % % % % % % % % % % % % % % %
-\section{Your Solution}
-\label{sec:solution}
-In this section you will describe your work, both in form and function. That is, you should describe its structure/architecture, but also how it works, both internally and externally. Internally, any data structures and algorithms that you have used are relevant, especially if they were developed especially for this work. Externally, consider how an end-user would use your work.
-
-Additionally, in this section you can also present the technical difficulties faced during the development, if and how they were overcome, and any limitations of the final product.
-
-Artifacts such as code or API listings do not belong in this section. If they are important to the report and need to be included, they should be put in appendices at the end of the document.
-
-% % % % % % % % % % % % % % % % % % % % %
-% 			EXPERIMENTAL EVALUATION
-% % % % % % % % % % % % % % % % % % % % %
-\section{Experimental Evaluation}
-\label{sec:evaluation}
-In this section you can describe the experimental evaluation that your performed to evaluate your project.
-
-\subsection{Experimental Setup}
-In this subsection you present the setup you used to perform your tests. The benchmarks uses, the runtime system, the hardware, the methodology, and so on. This is needed for reproducibility purposes and for readers to understand how your work is more or less relevant in their own context.
-
-\subsection{Experimental Results}
-In this subsection you present the achieved results and you conduct an analysis of the experiments to see if the results obtained are what was expected according to your initial assumptions. If they are not, you are expected to understand and explain why.
-
-% % % % % % % % % % % % % % % % % % % % %
-% 			RELATED WORK
-% % % % % % % % % % % % % % % % % % % % %
-\section{Related Work}
-\label{sec:rel}
-In this section you can present other work that is relevant to your own research and development. Usually a short paragraph will explain how the other approach works and what are the main differences to your work, e.g., what problems were left open that you manage to solve or how you took a different approach and what are its pros and cons.
-
-% % % % % % % % % % % % % % % % % % % % %
 % 			CONCLUSIONS
 % % % % % % % % % % % % % % % % % % % % %
-\section{Conclusions}
-\label{sec:conclusions}
-In this section you present the main conclusions of your work in a summarized form. You can also present relevant future work on to to tackle current limitations and extend functionality.
-
-% % % % % % % % % % % % % % % % % % % % %
-%      USEFUL EXAMPLES (TO DELETE)
-% % % % % % % % % % % % % % % % % % % % %
-\section{Useful Examples}
-\label{sec:examples}
-This section, which you should delete later on, has examples on how to use some of Latex's most common features and environments.
+\section{Conclusion}
+\label{sec:conclusion}
 
 
 
-\Cref{alg:memoi} presents a basic algorithm using the \textit{algorithmic} environment for pseudo-code.
-
-This is how you make an unumbered list:
-\begin{itemize}
-    \item This is the first item;
-    \item This is the second item;
-    \item This is the final item.
-    \item asd
-\end{itemize}
-
-Whenever you cite someone else's work, you need to include a reference to the relevant source. This is how you make a citation~\cite{Michie1968}. You can also cite multiple sources at once like this~\cite{Strachey2000,Connors2000}. The references need to be present in the \textit{refs.bib} file.
-
-
-
- shows you how to include a figure. By default, Latex uses PNG or PDF formats for figures.
-
-If you need to include equations, you can use Latex's excellent math environments. Here is a simple example of an equation:
-\begin{equation}\label{eq:log}
-    O(i, j) = c \times \log{(1+I(i, j))},
-\end{equation}
-where $c$ is a constant, $I$ is the input, $O$ is the output, and $i$ and $j$ are the image coordinates.
-
-You can use the acronym package to help manage acronyms. The first time you use an acronym, its full form will be displayed, e.g., \ac{DSL} or \ac{HPC}. However, the following times, only the short version will be used, as in \ac{DSL} or \ac{HPC}. You can also use the plural form of acronyms, e.g., \acp{DSL}. The list of known acronyms is defined in the preamble of the document.
-
-
-
-If you want to include code, you can also do so by using the listings package. Here is an example of how to do it. \Cref{fig:code} presents an example of how to include source code.
-
-Finally, tables can also be a good option to present data. \Cref{tab:table1} gives you an example of how to generate tables. Notice that the caption appears above the table, contrary to what happens with figures.
-
-\begin{table}[b]
-\caption{This is the table caption.}
-\label{tab:table1}
-\footnotesize
-\begin{tabular}{lll}
-\toprule
-         & machine A                   & machine B                           \\
-\midrule
-CPU      & Intel Core i7-9700 CPU      & 2x Intel Xeon E5-2630 v3            \\
-CPU Frequency& 3.00GHz                     & 2.40GHz                             \\
-RAM      & 16GB DDR4                   & 128GB                               \\
-OS       & Ubuntu 20.04 LTS            & Ubuntu 16.04 LTS                    \\
-Compiler & GCC 9.3                     & GCC 7.3                             \\
-libm     & v2.31                       & v2.23                               \\
-libomp   & v4.5                        & v4.5                                \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 % % % % % % % % % % % % % % % % % % % % %
 % 			ACKNOWLEDGMENTS

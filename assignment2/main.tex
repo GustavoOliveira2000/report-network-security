@@ -1,0 +1,242 @@
+\PassOptionsToPackage{usenames,dvipsnames,table}{xcolor}
+\documentclass[sigconf,balance,nonacm]{acmart}
+
+% packages
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{commath}
+\usepackage{graphicx}
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage{cleveref}
+\usepackage{algorithm,algpseudocode}
+\usepackage{specs}
+\usepackage{soul}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[nolist,nohyperlinks]{acronym}
+\usepackage{xspace}
+\usepackage{url}
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9} 
+
+% acronyms
+\begin{acronym}
+\acro{ARF}{Architecture and Reference Framework}
+\acro{CAB}{Conformity Assessment Body}
+\acro{DID}{Decentralized Identifier}
+\acro{DPIA}{Data Protection Impact Assessment}
+\acro{EAA}{Electronic Attestation of Attributes}
+\acro{EUDI}{European Digital Identity}
+\acro{GDPR}{General Data Protection Regulation}
+\acro{LoA}{Level of Assurance}
+\acro{mdoc}{Mobile Document}
+\acro{MFA}{Multi-Factor Authentication}
+\acro{NFC}{Near Field Communication}
+\acro{PET}{Privacy-Enhancing Technology}
+\acro{PID}{Person Identification Data}
+\acro{QEAA}{Qualified Electronic Attestation of Attributes}
+\acro{QES}{Qualified Electronic Signature}
+\acro{QTSP}{Qualified Trust Service Provider}
+\acro{SD-JWT}{Selective Disclosure JSON Web Token}
+\acro{SSI}{Self-Sovereign Identity}
+\acro{TEE}{Trusted Execution Environment}
+\acro{WSCA}{Wallet Secure Cryptographic Application}
+\acro{WSCD}{Wallet Secure Cryptographic Device}
+\acro{ZKP}{Zero-Knowledge Proof}
+\end{acronym}
+
+% title and authors
+\title{EUDI Wallet: eIDAS 2.0 and Architecture Reference Framework (ARF) v2.6.0}
+
+\author{Guilherme Coelho}
+\author{Gustavo Oliveira}
+\author{Pedro Galvão}
+
+\begin{abstract}
+The European Digital Identity Wallet represents a transformative initiative in digital identity management, establishing a unified framework for secure, privacy-preserving, and interoperable identity services across the European Union. Governed by the eIDAS 2.0 Regulation (EU 2024/1183) and operationalized through the Architecture and Reference Framework (ARF) v2.6.0, the EUDI Wallet synthesizes Self-Sovereign Identity principles with institutional trust mechanisms to empower citizens with unprecedented control over their personal data. This report focuses on a component-level evaluation of the ARF and on the conceptual design of a pilot implementation, analysing how identity verification, privacy safeguards, and interoperability mechanisms support concrete digital identity transactions in practice.
+\end{abstract}
+
+\keywords{European Digital Identity Wallet, eIDAS 2.0, Architecture and Reference Framework, Digital Identity, Interoperability, Privacy-by-Design}
+
+\begin{document}
+\maketitle
+
+% % % % % % % % % % % % % % % % % % % % %
+%              INTRODUCTION
+% % % % % % % % % % % % % % % % % % % % %
+\section{Introduction}
+\label{sec:intro}
+
+The goal of this project is to investigate which specific components of the European Digital Identity Wallet \ac{ARF} effectively support digital identity transactions under the eIDAS 2.0 framework. 
+Rather than providing another broad, descriptive overview of the ecosystem, this work narrows its focus to two complementary tasks:
+
+\begin{itemize}
+    \item a \emph{component evaluation} of key architectural building blocks that enable secure identification, privacy-preserving attribute exchange, and cross-border interoperability; and
+    \item a \emph{pilot design} that illustrates, at a high level, how those components can be orchestrated in a concrete use case.
+\end{itemize}
+
+In particular, we analyse:
+(i) how identity verification and authentication are realised across different Levels of Assurance (\ac{LoA}),
+(ii) how data minimisation and consent management mechanisms contribute to \ac{GDPR} compliance,
+and (iii) which interoperability mechanisms allow national identity systems and sectoral services to interact smoothly while sharing a common architectural baseline.
+
+Building on this analysis, we then propose a minimally functional pilot design for a specific use case, describing the actors involved, the flow of credentials and trust, and the way architectural principles from the \ac{ARF} are applied in practice.
+
+\subsection{Structure of the Report}
+
+The remainder of this report is structured as follows.
+Section~\ref{sec:components} presents the component evaluation, organised around identity verification and authentication, privacy safeguards, and interoperability mechanisms.
+Section~\ref{sec:pilot} introduces a high-level pilot design for a chosen use case, mapping the components analysed in Section~\ref{sec:components} to a practical flow of identity and trust.
+Section~\ref{sec:conclusion} concludes the report with a short reflection on the strengths and limitations of the \ac{ARF} in supporting real-world deployments.
+
+% % % % % % % % % % % % % % % % % % % % %
+%           COMPONENT EVALUATION
+% % % % % % % % % % % % % % % % % % % % %
+\section{Component Evaluation}
+\label{sec:components}
+
+The \ac{ARF} defines a set of technical and organisational components that work together to support digital identity transactions, from initial identity proofing to the presentation of attributes to Relying Parties.
+In this section, we evaluate those components along three dimensions explicitly required by the assignment: identity verification and authentication, data minimisation and consent management, and interoperability mechanisms.
+
+\subsection{Identity Verification and Authentication}
+\label{subsec:identity_verification}
+
+% TODO: explicar, com base no ARF, como:
+%  - PID Providers e (Q)EAA Providers fazem identity proofing com Authentic Sources;
+%  - LoA (especialmente LoA High) é suportado pela combinação de processos organizacionais + WSCD/WSCA;
+%  - a Wallet autentica o utilizador (MFA / SUA) e autentica Relying Parties / Providers (certificados, trust lists, etc.).
+%
+% Sugestão de subtítulos internos:
+% \subsubsection*{Identity Proofing and PID Issuance}
+% \subsubsection*{Authentication of the Holder}
+% \subsubsection*{Mutual Authentication with Relying Parties}
+
+\subsubsection*{Identity Proofing and PID Issuance}
+
+% TODO: Descrever fluxo de criação de PID, uso de Authentic Sources, papel do PID Provider, e ligação a níveis de garantia (LoA).
+
+\subsubsection*{Authentication of the Holder}
+
+% TODO: Descrever como a Wallet autentica o utilizador (PIN, biometria, MFA, SUA) e como isso se relaciona com LoA.
+
+\subsubsection*{Mutual Authentication with Relying Parties}
+
+% TODO: Explicar, com base no ARF, como Wallet e Relying Party / Provider se autenticam mutuamente (certificados, acess certificates, trust infrastructure).
+
+\subsection{Data Minimisation and Consent Management}
+\label{subsec:data_minimisation}
+
+% TODO: Analisar os mecanismos de data minimisation e consent previstos no ARF:
+%  - selective disclosure de atributos (PID, EAA, QEAA);
+%  - UI/UX da Wallet para consentimento explícito;
+%  - dashboard / transaction log, direito ao apagamento (GDPR Art. 17);
+%  - anti-tracking / unlinkability a nível de arquitectura.
+
+\subsubsection*{Selective Disclosure of Attributes}
+
+% TODO: Explicar como o ARF prevê apresentações seletivas de atributos e como isso concretiza o princípio de minimização.
+
+\subsubsection*{User Consent and Transparency}
+
+% TODO: Descrever o fluxo de consentimento, os avisos da Wallet, a verificação de atributos registados para o Relying Party, etc.
+
+\subsubsection*{Unlinkability and Anti-Tracking Measures}
+
+% TODO: Discutir, de forma crítica, como a arquitectura tenta evitar correlação de transações (pseudónimos locais, PoP, etc.), e limitações práticas.
+
+\subsection{Interoperability Mechanisms}
+\label{subsec:interoperability}
+
+% TODO: Avaliar os mecanismos de interoperabilidade:
+%  - uso de normas de dados (p.ex. vc data model, ISO 18013-5 / mdoc, SD-JWT) tal como descritas no ARF;
+%  - protocolos de emissão e apresentação (OpenID4VCI / OpenID4VP, mDL flows, etc.) na medida em que são explicitamente referidos;
+%  - trust infrastructure para reconhecimento transfronteiriço (registrars, trusted lists, certificados qualificados).
+
+\subsubsection*{Cross-Border Credential Formats}
+
+% TODO: Descrever os formatos de credenciais que o ARF prevê e como facilitam utilização entre Estados-Membros.
+
+\subsubsection*{Protocol Flows for Issuance and Presentation}
+
+% TODO: Explicar, de forma sintética, os fluxos de emissão/apresentação que o ARF especifica e como contribuem para interoperabilidade.
+
+\subsubsection*{Trust Infrastructure and Recognition}
+
+% TODO: Analisar o papel de trust services, trusted lists, registrars, etc., na interoperabilidade entre sistemas nacionais e setoriais.
+
+% % % % % % % % % % % % % % % % % % % % %
+%                PILOT DESIGN
+% % % % % % % % % % % % % % % % % % % % %
+\section{Pilot Design}
+\label{sec:pilot}
+
+Based on the component evaluation in Section~\ref{sec:components}, this section outlines a minimally functional pilot design for a specific use case.
+The goal is not to specify an implementation in full technical detail, but to demonstrate how identity attributes, trust flows, and privacy safeguards defined in the \ac{ARF} can be combined in a realistic scenario.
+
+\subsection{Use Case Description}
+\label{subsec:usecase}
+
+% TODO: Escolher e descrever um caso de uso concreto (por exemplo:
+%  - abertura de conta bancária,
+%  - registo de SIM,
+%  - autenticação a um portal público transfronteiriço).
+% Descrever o contexto, os requisitos de LoA, as entidades envolvidas e o tipo de atributos necessários.
+
+\subsection{Actors and ARF Components}
+\label{subsec:actors}
+
+% TODO: Mapear actores do caso de uso para os papéis do ARF:
+%  - Holder, Wallet Provider, PID Provider, (Q)EAA Provider, Relying Party, QTSP, Registrar, etc.
+% Explicar brevemente que componentes (Wallet Unit, WSCD, WSCA, backends, trust services) são relevantes.
+
+\subsection{Flow of Identity Attributes and Trust}
+\label{subsec:flow}
+
+% TODO: Descrever, passo a passo, o fluxo principal do piloto:
+%  1. Onboarding do utilizador e emissão de PID / (Q)EAA.
+%  2. Preparação do Relying Party (registo, certificados, definição de atributos necessários).
+%  3. Autenticação do utilizador ao serviço usando a Wallet.
+%  4. Apresentação seletiva de atributos e verificação por parte do Relying Party.
+%  5. Registo no transaction log / dashboard para efeitos de transparência e GDPR.
+
+% Se quiseres, aqui podes também referir (em texto) um diagrama de sequência ou de componentes.
+
+\subsection{Security, Privacy, and Interoperability Considerations}
+\label{subsec:spi}
+
+% TODO: Discutir como o piloto:
+%  - cumpre requisitos de segurança (LoA, WSCD, MFA, certificados, revogação);
+%  - cumpre requisitos de privacidade (minimização, consentimento, unlinkability);
+%  - demonstra interoperabilidade (uso de formatos/protocolos comuns, reconhecimento transfronteiriço).
+
+% % % % % % % % % % % % % % % % % % % % %
+%               CONCLUSION
+% % % % % % % % % % % % % % % % % % % % %
+\section{Conclusion}
+\label{sec:conclusion}
+
+% TODO: Sintetizar:
+%  - o que foi aprendido com a avaliação de componentes do ARF;
+%  - como o piloto ilustra, na prática, a aplicação desses componentes;
+%  - limitações identificadas (por exemplo, complexidade, dependência de certificação, desafios de usabilidade);
+%  - possíveis extensões (mais casos de uso, maior automatização, integração com outros sistemas).
+
+This report analysed how specific components of the EUDI \ac{ARF} support secure and privacy-preserving digital identity transactions and proposed a high-level pilot design to illustrate their application in practice.
+By structuring the discussion around identity verification, data minimisation, and interoperability, we highlighted the architectural strengths of the framework and the main trade-offs involved in real-world deployments.
+The pilot design showed how these components can be orchestrated in a concrete use case, offering a starting point for further technical refinement and implementation work.
+
+% % % % % % % % % % % % % % % % % % % % %
+%           ACKNOWLEDGMENTS (OPTIONAL)
+% % % % % % % % % % % % % % % % % % % % %
+\section*{Acknowledgments}
+
+% Opcional: podes manter, adaptar ou remover.
+The authors would like to acknowledge the work of the European Commission and the Member State experts involved in the definition of the EUDI Architecture and Reference Framework, as well as the broader research and standards communities working on digital identity and privacy-enhancing technologies.
+
+% % % % % % % % % % % % % % % % % % % % %
+%               BIBLIOGRAPHY
+% % % % % % % % % % % % % % % % % % % % %
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{refs}
+
+\end{document}

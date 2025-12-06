@@ -103,39 +103,17 @@ In this section, we evaluate those components along three dimensions explicitly 
 
 \subsection{Identity Verification and Authentication}
 
-<<<<<<< HEAD
-% TODO: explicar, com base no ARF, como:
-%  - PID Providers e (Q)EAA Providers fazem identity proofing com Authentic Sources;
-%  - LoA (especialmente LoA High) é suportado pela combinação de processos organizacionais + WSCD/WSCA;
-%  - a Wallet autentica o utilizador (MFA / SUA) e autentica Relying Parties / Providers (certificados, trust lists, etc.).
-%
-% Sugestão de subtítulos internos:
-% \subsubsection{Identity Proofing and PID Issuance}
-% \subsubsection{Authentication of the Holder}
-% \subsubsection{Mutual Authentication with Relying Parties}
-
-\subsubsection{Identity Proofing and PID Issuance}
-=======
 Identity verification and authentication within the EUDI Wallet ecosystem are governed by the regulatory framework established by the revised eIDAS 2.0 Regulation (EU 2024/1183) and operationalized through the Architecture and Reference Framework (ARF) v2.6.0. The regulatory foundation recognizes three Levels of Assurance (LoA)—\emph{low}, \emph{substantial}, and \emph{high}—as originally defined in Article~8 of the eIDAS Regulation and maintained under the updated framework~\cite{EU_eIDAS2024}. These levels categorize the degree of confidence in the asserted identity and the robustness of the corresponding authentication mechanisms. Although all three levels remain legally recognized, the ARF consistently targets \textbf{LoA High} as the baseline for Wallet operations, reflecting the need for a secure, cross-border digital identity infrastructure capable of supporting sensitive use cases across both public and private sectors~\cite{EU_ARF2024}.
 
 \subsubsection*{Identity Proofing}
->>>>>>> 3edaf01 (Atualiza assignment2)
 
 In the EUDI architecture, LoA High requirements span the entire lifecycle of identity creation, credential issuance, storage, and presentation. Identity proofing during the issuance of Person Identification Data (PID) is conducted by PID Providers on the basis of authoritative registers, adhering to the verification procedures defined in ARF Sections~4.3.1 and~5.4.1~\cite{EU_ARF2024}. The identity of the Holder must be verified using in-person or equivalent high-assurance remote onboarding methods, ensuring that the PID reflects authentic civil identity information. Similarly, Qualified Electronic Attestations of Attributes (QEAAs) issued by Qualified Trust Service Providers (QTSPs) must meet the high-assurance obligations of eIDAS 2.0, particularly Articles~24–26, which mandate strong identity verification prior to the issuance of qualified credentials~\cite{EU_eIDAS2024}.
 
-<<<<<<< HEAD
-\subsubsection{Authentication of the Holder}
-=======
 \subsubsection*{MFA and Strong User Authentication}
->>>>>>> 3edaf01 (Atualiza assignment2)
 
 To maintain LoA High beyond the issuance phase, the ARF requires that the EUDI Wallet implement \emph{Strong User Authentication} (SUA), a mechanism essentially aligned with multi-factor authentication (MFA). As defined in ARF Section~5.2~\cite{EU_ARF2024}, authentication to the Wallet Instance must rely on at least two independent authentication factors, combining elements such as knowledge (PIN or password), possession (the Wallet Secure Cryptographic Device, WSCD), and inherence (biometric verification processed within a secure hardware enclave). By binding user authentication to the cryptographic capabilities of the WSCD and preventing exposure of biometric or secret material outside secure execution environments, the architecture satisfies both LoA High and GDPR privacy requirements~\cite{EU_eIDAS2024}.
 
-<<<<<<< HEAD
-\subsubsection{Mutual Authentication with Relying Parties}
-=======
 \subsubsection*{Cryptographic Binding Between Credential and WSCD Key}
->>>>>>> 3edaf01 (Atualiza assignment2)
 
 A central element of assurance is the \emph{cryptographic binding} between the issued credential and the Holder’s WSCD key. ARF Section~4.1.2 mandates that private keys used for credential binding and authentication must be generated, stored, and used exclusively within a certified Secure Element or Trusted Execution Environment~\cite{EU_ARF2024}. This ensures that credentials cannot be transferred, cloned, or exported to unauthorized devices, and provides strong cryptographic guarantees of non-repudiation and Holder control. Bindings are verified during both credential issuance (OpenID4VCI flows) and presentation (OpenID4VP), ensuring continuity of trust across all protocol stages.
 
@@ -180,7 +158,10 @@ To illustrate the architectural components that collectively support LoA High, t
     \label{tab:loa-high}
 \end{table}
 
-In summary, the ARF and eIDAS 2.0 jointly define a high-assurance authentication and verification model centered on rigorous identity proofing, secure hardware-backed cryptography, multi-factor authentication, mutual verification of parties, and robust replay-resistant session semantics. The result is an end-to-end trust framework purpose-built for secure, privacy-preserving digital identity in the European Union~\cite{EU_ARF2024,EU_eIDAS2024}. jointly define a high-assurance authentication and verification model centered on rigorous identity proofing, secure hardware-backed cryptography, multi-factor authentication, mutual verification of parties, and robust replay-resistant session semantics. The result is an end-to-end trust framework purpose-built for secure, privacy-preserving digital identity in the European Union~\cite{EU_ARF2024,EU_eIDAS2024}.\subsection{Data Minimisation and Consent Management}
+In summary, the ARF and eIDAS 2.0 jointly define a high-assurance authentication and verification model centered on rigorous identity proofing, secure hardware-backed cryptography, multi-factor authentication, mutual verification of parties, and robust replay-resistant session semantics. The result is an end-to-end trust framework purpose-built for secure, privacy-preserving digital identity in the European Union~\cite{EU_ARF2024,EU_eIDAS2024}. jointly define a high-assurance authentication and verification model centered on rigorous identity proofing, secure hardware-backed cryptography, multi-factor authentication, mutual verification of parties, and robust replay-resistant session semantics. The result is an end-to-end trust framework purpose-built for secure, privacy-preserving digital identity in the European Union~\cite{EU_ARF2024,EU_eIDAS2024}.
+
+
+\subsection{Data Minimisation and Consent Management}
 \label{subsec:data_minimisation}
 
 Data minimisation, a cornerstone principle of the General Data Protection Regulation (GDPR), requires that personal data be adequate, relevant, and limited to what is necessary in relation to the purposes for which they are processed. The \ac{ARF} operationalises this principle through selective disclosure mechanisms, explicit consent flows, and architectural safeguards that prevent unauthorised tracking and correlation of user activities across services. These technical and organisational measures ensure that the EUDI Wallet not only complies with legal obligations but embeds privacy protection as a fundamental design characteristic.

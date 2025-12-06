@@ -107,63 +107,99 @@ In this section, we evaluate those components along three dimensions explicitly 
 %  - a Wallet autentica o utilizador (MFA / SUA) e autentica Relying Parties / Providers (certificados, trust lists, etc.).
 %
 % Sugestão de subtítulos internos:
-% \subsubsection*{Identity Proofing and PID Issuance}
-% \subsubsection*{Authentication of the Holder}
-% \subsubsection*{Mutual Authentication with Relying Parties}
+% \subsubsection{Identity Proofing and PID Issuance}
+% \subsubsection{Authentication of the Holder}
+% \subsubsection{Mutual Authentication with Relying Parties}
 
-\subsubsection*{Identity Proofing and PID Issuance}
+\subsubsection{Identity Proofing and PID Issuance}
 
 % TODO: Descrever fluxo de criação de PID, uso de Authentic Sources, papel do PID Provider, e ligação a níveis de garantia (LoA).
 
-\subsubsection*{Authentication of the Holder}
+\subsubsection{Authentication of the Holder}
 
 % TODO: Descrever como a Wallet autentica o utilizador (PIN, biometria, MFA, SUA) e como isso se relaciona com LoA.
 
-\subsubsection*{Mutual Authentication with Relying Parties}
+\subsubsection{Mutual Authentication with Relying Parties}
 
 % TODO: Explicar, com base no ARF, como Wallet e Relying Party / Provider se autenticam mutuamente (certificados, acess certificates, trust infrastructure).
 
 \subsection{Data Minimisation and Consent Management}
 \label{subsec:data_minimisation}
 
-% TODO: Analisar os mecanismos de data minimisation e consent previstos no ARF:
-%  - selective disclosure de atributos (PID, EAA, QEAA);
-%  - UI/UX da Wallet para consentimento explícito;
-%  - dashboard / transaction log, direito ao apagamento (GDPR Art. 17);
-%  - anti-tracking / unlinkability a nível de arquitectura.
+Data minimisation, a cornerstone principle of the General Data Protection Regulation (GDPR), requires that personal data be adequate, relevant, and limited to what is necessary in relation to the purposes for which they are processed. The \ac{ARF} operationalises this principle through selective disclosure mechanisms, explicit consent flows, and architectural safeguards that prevent unauthorised tracking and correlation of user activities across services. These technical and organisational measures ensure that the EUDI Wallet not only complies with legal obligations but embeds privacy protection as a fundamental design characteristic.
 
-\subsubsection*{Selective Disclosure of Attributes}
+\subsubsection{Selective Disclosure of Attributes}
 
-% TODO: Explicar como o ARF prevê apresentações seletivas de atributos e como isso concretiza o princípio de minimização.
+Selective disclosure enables users to present only the specific attributes required for a given transaction, withholding all other personal information even when it resides within the same credential. The \ac{ARF} mandates that all Person Identification Data (PID) and Electronic Attestation of Attributes (EAA) credentials support selective disclosure using privacy-preserving formats~\cite{ARF}. Two primary technical mechanisms implement this capability: Selective Disclosure JSON Web Tokens (SD-JWT) for credentials based on the W3C Verifiable Credentials Data Model, and the mobile document (mdoc) format defined in ISO/IEC 18013-5:2021 for CBOR-encoded credentials.
 
-\subsubsection*{User Consent and Transparency}
+SD-JWT achieves selective disclosure by cryptographically hashing individual claims within a credential separately, allowing the wallet to construct presentations that include only the plaintext values of disclosed attributes alongside the hashes of undisclosed ones. When a Relying Party requests proof of a specific attribute—for example, confirmation that a user is over 18 years of age—the wallet can reveal only the \texttt{age\_over\_18} boolean claim without disclosing the user's exact date of birth, full name, address, or any other personal identifiers contained in the PID~\cite{DocuSign_SelectDisclosure,ISC2}. The Relying Party can cryptographically verify that the disclosed attribute is authentic and has not been tampered with, but cannot access any information the user has chosen to withhold.
 
-% TODO: Descrever o fluxo de consentimento, os avisos da Wallet, a verificação de atributos registados para o Relying Party, etc.
+Similarly, the ISO/IEC 18013-5 mdoc format structures credentials as a collection of data elements within defined namespaces, enabling fine-grained disclosure control. During proximity presentations using NFC or Bluetooth, the wallet presents only the requested data elements while maintaining cryptographic binding to the issuer's signature. This approach is particularly effective for offline verification scenarios where network connectivity is unavailable, such as age verification at retail points of sale or document checks at border crossings.
 
-\subsubsection*{Unlinkability and Anti-Tracking Measures}
+The \ac{ARF} further defines specific mechanisms for age verification without date of birth disclosure, leveraging the \texttt{age\_over\_NN} attributes specified in ISO/IEC 18013-5. These derived attributes allow users to prove they meet various age thresholds (e.g., 16, 18, 21) without revealing their precise birthdate, thereby minimising the personal data shared in common identity verification scenarios. This capability directly implements the data minimisation obligation under Article 5(1)(c) GDPR while maintaining the assurance level necessary for regulated activities~\cite{ZKPDiscussion_Recital15,ZKPDiscussion_Recital59}.
 
-% TODO: Discutir, de forma crítica, como a arquitectura tenta evitar correlação de transações (pseudónimos locais, PoP, etc.), e limitações práticas.
+\subsubsection{User Consent and Transparency}
+
+The principle of user control over personal data, central to both GDPR and Self-Sovereign Identity paradigms, is embedded throughout the wallet's consent and transparency mechanisms. Article 5a(4) of eIDAS 2.0 mandates that the wallet provide a common dashboard enabling users to view an up-to-date list of Relying Parties with which they have shared data, along with details of all exchanged information~\cite{EU_eIDAS2024}. This dashboard must display, at minimum, the time and date of each transaction, the identity of the counterpart, the personal data requested, and the data actually shared.
+
+Before any credential presentation, the wallet interface must present the user with clear, unambiguous information about what attributes are being requested, by whom, and for what stated purpose~\cite{ISC2,Potential_eudiwallet}. Users must provide explicit consent for each disclosure, with the wallet ensuring that consent is freely given, specific, informed, and unambiguous as required by Article 4(11) and Article 7 GDPR. The \ac{ARF} specifies that wallets must alert users if a Relying Party requests data beyond what it has registered for in the national registry, providing users the option to reject such transactions.
+
+Relying Parties must register their intended uses of the EUDI Wallet with competent authorities in their Member State of establishment, specifying exactly which attributes they will request and the legal or contractual basis for doing so. This registration information is made publicly available online in user-friendly formats, allowing both users and the wallet itself to verify that data requests align with declared purposes. The registration requirement implements accountability obligations under Article 5(2) GDPR and provides transparency about data processing practices before users engage with services~\cite{EU_ARF2024}.
+
+The dashboard also enables users to exercise their rights under GDPR, including the right to request erasure of personal data (Article 17) and the right to report suspected unlawful data processing to competent Data Protection Authorities. By consolidating transaction history, consent records, and data subject rights mechanisms in a single, accessible interface, the wallet operationalises the transparency obligations that underpin trust in personal data processing~\cite{Potential_eudiwallet}.
+
+\subsubsection{Unlinkability and Anti-Tracking Measures}
+
+Beyond selective disclosure and consent management, the \ac{ARF} implements architectural measures to prevent tracking and correlation of user activities across different Relying Parties. Article 5a(16) of eIDAS 2.0 explicitly requires that the wallet prevent attestation providers or Relying Parties from tracking user behaviour and ensure unlinkability~\cite{ZKPDiscussion_Article5a}. Unlinkability means that different transactions performed by the same user cannot be correlated by service providers, thereby preventing the construction of comprehensive user profiles without explicit consent.
+
+The wallet achieves unlinkability through several technical mechanisms. First, credential presentations must not contain persistent identifiers that remain constant across different Relying Parties. Instead, the wallet generates transaction-specific or Relying Party-specific pseudonyms, ensuring that the same user appears with different identifiers to different services. Second, the wallet employs cryptographic proof-of-possession mechanisms that demonstrate control over credentials without revealing long-term private keys, preventing key-based tracking across presentations.
+
+Third, the \ac{ARF} mandates that PID Providers and Attestation Providers must not learn how users employ issued credentials. Article 5a(5) of eIDAS 2.0 prohibits wallets from providing any information to trust service providers about the use of attestations~\cite{EU_eIDAS2024}. This "issuer blindness" prevents even trusted authorities from monitoring citizen interactions with private or public services, reinforcing privacy against surveillance by state actors and institutional service providers alike.
+
+However, achieving perfect unlinkability while maintaining high assurance levels presents practical challenges. Certain high-risk transactionsâ€"such as financial services subject to anti-money laundering regulations, border control, or law enforcement investigationsâ€"may require linkable identifiers under legal obligations. The \ac{ARF} acknowledges these tensions and provides mechanisms for pseudonymous authentication as the default mode, with full identification reserved for scenarios where legal mandates necessitate it. Users can create and manage multiple pseudonyms, and Relying Parties cannot reject pseudonym-based authentication unless required by law~\cite{EU_ARF2024}.
+
+Moreover, practical implementation of unlinkability depends on broader ecosystem design beyond the wallet itself. If Relying Parties collude to correlate transactions based on timing, disclosed attributes, or network metadata, architectural unlinkability guarantees may be circumvented. The regulatory framework addresses this through Data Protection Impact Assessments (DPIAs) required under Recital 17 of eIDAS 2.0, mandating that Relying Parties assess and mitigate high privacy risks before processing wallet data~\cite{EU_eIDAS2024}. Supervisory authorities must be consulted where DPIAs indicate residual high risks, providing an institutional safeguard complementing technical privacy measures.
 
 \subsection{Interoperability Mechanisms}
 \label{subsec:interoperability}
 
-% TODO: Avaliar os mecanismos de interoperabilidade:
-%  - uso de normas de dados (p.ex. vc data model, ISO 18013-5 / mdoc, SD-JWT) tal como descritas no ARF;
-%  - protocolos de emissão e apresentação (OpenID4VCI / OpenID4VP, mDL flows, etc.) na medida em que são explicitamente referidos;
-%  - trust infrastructure para reconhecimento transfronteiriço (registrars, trusted lists, certificados qualificados).
+Interoperability—the ability for diverse systems implemented by different Member States, sectors, and providers to exchange and mutually recognise digital credentials—is fundamental to realising the EUDI Wallet's vision of a seamless European digital identity ecosystem. The \ac{ARF} achieves interoperability through adherence to internationally recognised standards for credential formats, protocols for issuance and presentation, and a trust infrastructure that enables cross-border verification without requiring bilateral agreements between all parties. This section evaluates these mechanisms and their role in supporting the wallet's operational requirements.
 
-\subsubsection*{Cross-Border Credential Formats}
+\subsubsection{Cross-Border Credential Formats}
 
-% TODO: Descrever os formatos de credenciais que o ARF prevê e como facilitam utilização entre Estados-Membros.
+The \ac{ARF} mandates support for two complementary credential data models: the W3C Verifiable Credentials Data Model 1.1 and the ISO/IEC 18013-5:2021 mobile document (mdoc) format~\cite{EU_ARF2024}. This dual-format approach balances flexibility for diverse use cases with proven interoperability in high-assurance, offline scenarios. The W3C Verifiable Credentials Data Model provides an extensible JSON-based framework suitable for representing a wide range of attestations, from government-issued identity documents to educational diplomas, professional licenses, and sectoral credentials. Its flexibility enables innovation and adaptation to emerging use cases while maintaining a consistent verification model based on cryptographic signatures and decentralised identifiers.
 
-\subsubsection*{Protocol Flows for Issuance and Presentation}
+ISO/IEC 18013-5, developed originally for mobile driving licenses (mDL), defines a CBOR-encoded credential structure optimised for constrained environments where bandwidth, storage, and computational resources are limited. The mdoc format has been extensively tested and deployed in multiple jurisdictions worldwide, providing a mature foundation for the EUDI Wallet's proximity presentation requirements. Its support for offline verification—enabling credential validation without internet connectivity—is critical for use cases such as border control, retail age verification, and access to physical spaces where network reliability cannot be guaranteed.
 
-% TODO: Explicar, de forma sintética, os fluxos de emissão/apresentação que o ARF especifica e como contribuem para interoperabilidade.
+The \ac{ARF} specifies that PID attestations and Qualified Electronic Attestations of Attributes (QEAA) must be issued in accordance with both data models: using Selective Disclosure JSON Web Tokens (SD-JWT) for W3C-based encoding and ISO/IEC 18013-5 mdoc format for CBOR-based encoding. This dual issuance ensures that credentials can be presented in contexts favouring either remote online verification or proximity offline scenarios, maximising usability across the diverse landscape of European digital services~\cite{EU_ARF2024}.
 
-\subsubsection*{Trust Infrastructure and Recognition}
+To support semantic interoperability, the \ac{ARF} introduces attestation rulebooks that define the structure, mandatory and optional attributes, data types, and namespace identifiers for specific credential types. The PID Rulebook, for example, specifies the core attributes that all Member States must support for Person Identification Data, along with mechanisms for national extensions that accommodate legal or administrative specificities. This controlled vocabulary approach reduces ambiguity in credential interpretation and enables automated processing by Relying Parties without requiring manual mapping or translation between national implementations~\cite{Finextra_SSI}.
 
-% TODO: Analisar o papel de trust services, trusted lists, registrars, etc., na interoperabilidade entre sistemas nacionais e setoriais.
+\subsubsection{Protocol Flows for Issuance and Presentation}
 
+Standardised protocols for credential issuance and presentation are essential for interoperability between Wallet Instances, PID Providers, Attestation Providers, and Relying Parties. The \ac{ARF} specifies distinct protocol families depending on the interaction model and technical context.
+
+For remote online credential issuance, the \ac{ARF} mandates the use of OpenID for Verifiable Credential Issuance (OpenID4VCI), an extension of the OAuth 2.0 and OpenID Connect frameworks designed specifically for issuing verifiable credentials to digital wallets~\cite{EU_ARF2024}. OpenID4VCI defines how a wallet requests credentials from a PID Provider or Attestation Provider, how the issuer authenticates the user and verifies their eligibility, and how cryptographic holder binding is established to ensure credentials cannot be transferred to unauthorised parties. The protocol supports both synchronous issuance, where credentials are delivered immediately upon successful authentication, and deferred issuance, where background verification processes complete before credential delivery.
+
+For remote online credential presentation, the \ac{ARF} specifies OpenID for Verifiable Presentations (OpenID4VP), which enables Relying Parties to request specific attributes from a wallet and receive cryptographic proofs of credential authenticity and holder control~\cite{EU_ARF2024}. OpenID4VP leverages presentation exchange protocols that allow Relying Parties to express fine-grained attribute requests, enabling selective disclosure aligned with data minimisation requirements. The protocol includes mechanisms for mutual authentication, ensuring that both the wallet and the Relying Party can verify each other's legitimacy before exchanging sensitive information.
+
+For proximity presentation scenarios, the \ac{ARF} adopts the ISO/IEC 18013-5 device engagement and data retrieval protocols, which define how a secure communication channel is established between the wallet and a verifier using NFC, Bluetooth Low Energy, or QR codes~\cite{EU_ARF2024}. These protocols support offline verification, where the verifier validates credential signatures and revocation status using locally cached issuer certificates and cryptographic material, without requiring real-time network access. The proven deployment of ISO/IEC 18013-5 in mobile driving license programmes across multiple countries provides confidence in its reliability for high-assurance offline verification scenarios.
+
+The combination of OpenID-based protocols for online interactions and ISO/IEC 18013-5 protocols for proximity use cases ensures that the EUDI Wallet can operate across the full spectrum of digital identity transactions, from remote authentication to e-government services to in-person verification at border checkpoints or retail establishments~\cite{Finextra_SSI}.
+
+\subsubsection{Trust Infrastructure and Recognition}
+
+Cross-border interoperability depends not only on common data formats and protocols but also on a trust infrastructure that enables verifiers to validate credentials issued by providers in other Member States. The \ac{ARF} establishes a hierarchical trust model anchored through qualified trust service providers operating under eIDAS 2.0 supervision, trust registries maintained at national and European levels, and mechanisms for certificate validation and revocation checking~\cite{EU_ARF2024,PortoThesis}.
+
+For ISO/IEC 18013-5-based credentials, trust is established through an X.509 Public Key Infrastructure (PKI) where each PID Provider and Attestation Provider operates as a certificate authority with its own root certificate. National trust registries publish issuer metadata, certificate chains, and revocation information, enabling Relying Parties to retrieve the cryptographic material necessary to verify credential signatures and validate issuer authenticity. The trust registries themselves are discoverable through standardised protocols, and their integrity is protected through cryptographic signatures from national supervisory authorities~\cite{PortoThesis,Finextra_SSI}.
+
+For W3C-based credentials using SD-JWT, the \ac{ARF} specifies trust frameworks based on OpenID Federation, which provides a distributed trust model enabling entities to establish trust relationships through cryptographic proofs and metadata exchanges. OpenID Federation supports hierarchical trust chains where intermediate entities vouch for leaf entities, enabling scalable trust propagation across the EU ecosystem without requiring pre-negotiated bilateral agreements. Trust anchors at the European level—maintained by the European Commission or designated EU-wide trust service providers—provide ultimate roots of trust that Member States and sectoral services can rely upon~\cite{EU_ARF2024}.
+
+The trust infrastructure also incorporates mechanisms for certificate and credential revocation, ensuring that compromised or expired credentials cannot be used for fraudulent purposes. Revocation status can be checked through Online Certificate Status Protocol (OCSP) queries, Certificate Revocation Lists (CRLs), or more privacy-preserving mechanisms such as status list credentials that enable batch revocation checking without revealing which specific credentials are being validated. The \ac{ARF} requires that Wallet Instances check revocation status before presenting credentials to Relying Parties, and that Relying Parties verify revocation status as part of their credential validation process~\cite{EU_ARF2024}.
+
+Crucially, the legal framework of eIDAS 2.0 mandates mutual recognition of credentials issued under the regulation, meaning that a PID issued in one Member State must be accepted by Relying Parties in all other Member States~\cite{EU_eIDAS2024,Finextra_SSI}. This legal obligation, combined with the technical interoperability mechanisms provided by the \ac{ARF}, eliminates historical fragmentation where national eID schemes operated in isolation and were not recognised across borders. The attestation rulebooks and schema catalogues published by the European Commission provide additional guidance, ensuring that issuers and verifiers interpret credential attributes consistently and that sectoral use cases can be supported through standardised credential types.
+
+The Large-Scale Pilots (LSPs) currently underway across Europe, including the POTENTIAL consortium involving 19 Member States and over 140 partners, provide real-world validation of these interoperability mechanisms. Pilot participants are testing credential issuance, presentation, and verification flows across diverse implementations, identifying integration challenges and refining specifications to ensure seamless operation when the EUDI Wallet is mandated for all Member States by the end of 2026~\cite{EU_ARF2024}.
 % % % % % % % % % % % % % % % % % % % % %
 %                PILOT DESIGN
 % % % % % % % % % % % % % % % % % % % % %

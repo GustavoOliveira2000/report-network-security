@@ -203,47 +203,107 @@ The Large-Scale Pilots (LSPs) currently underway across Europe, including the PO
 % % % % % % % % % % % % % % % % % % % % %
 %                PILOT DESIGN
 % % % % % % % % % % % % % % % % % % % % %
-\section{Pilot Design}
-\label{sec:pilot}
+\section{Pilot Test Implementation}
 
-Based on the component evaluation in Section~\ref{sec:components}, this section outlines a minimally functional pilot design for a specific use case.
-The goal is not to specify an implementation in full technical detail, but to demonstrate how identity attributes, trust flows, and privacy safeguards defined in the \ac{ARF} can be combined in a realistic scenario.
+To evaluate the practical implementation and operational workflow of an EUDI Wallet based on the eIDAS 2.0 framework \cite{eidas2_regulation}, we developed a comprehensive pilot test. The eIDAS 2.0 regulation, adopted by the European Parliament on 29 February 2024 and entered into force on 20 May 2024, mandates all EU member states to offer their citizens EUDI Wallets by the beginning of 2027. This pilot simulates a real-world scenario involving three fundamental ecosystem components as defined in the EUDI Wallet Architecture and Reference Framework (ARF) \cite{eudi_arf}: a User Wallet, an Issuer, and a Verifier.
 
-\subsection{Use Case Description}
-\label{subsec:usecase}
+The scenario demonstrates the complete lifecycle of a digital academic credential: a university (Issuer) issues a diploma, which is securely stored in the student's wallet, and later presented to an employer or institution (Verifier) to prove academic qualifications. All components were built using EU reference codebases \cite{eudi_reference_implementation}, adapted specifically for this demonstration.
 
-% TODO: Escolher e descrever um caso de uso concreto (por exemplo:
-%  - abertura de conta bancária,
-%  - registo de SIM,
-%  - autenticação a um portal público transfronteiriço).
-% Descrever o contexto, os requisitos de LoA, as entidades envolvidas e o tipo de atributos necessários.
+% -----------------------------------------------------------
+\subsection{System Architecture and Configuration}
 
-\subsection{Actors and ARF Components}
-\label{subsec:actors}
+The entire architecture was deployed on a single Windows 11 machine, allowing for complete local testing of the ecosystem while maintaining the distributed nature of the components as described in the ARF \cite{eudi_arf}.
 
-% TODO: Mapear actores do caso de uso para os papéis do ARF:
-%  - Holder, Wallet Provider, PID Provider, (Q)EAA Provider, Relying Party, QTSP, Registrar, etc.
-% Explicar brevemente que componentes (Wallet Unit, WSCD, WSCA, backends, trust services) são relevantes.
+\subsubsection{User Wallet Configuration}
+The User Wallet implementation leverages the official Android reference application from the \texttt{eudi-app-android-wallet-ui} repository \cite{eudi_android_wallet}. We used Android Studio both for source code modifications and to run the application through its integrated device emulator. This approach provided a realistic mobile environment without requiring physical hardware during development and testing phases. The wallet implements the core functionalities mandated by Article 5a of the eIDAS 2.0 regulation \cite{eidas2_regulation}.
 
-\subsection{Flow of Identity Attributes and Trust}
-\label{subsec:flow}
+\subsubsection{Issuer Service Setup}
+The Issuer service runs as a Flask-based web application developed in Python 3.11. Using Visual Studio Code as the development environment, we configured the service to operate on \texttt{localhost:5000}, making it accessible to the User Wallet for credential issuance requests. The implementation draws from the official \texttt{eudi-srv-web-issuing-eudiw-py} repository \cite{eudi_issuer_service}, with all required dependencies managed through a \texttt{requirements.txt} file. The issuer follows the OpenID for Verifiable Credential Issuance (OpenID4VCI) protocol \cite{openid4vci} as specified in the ARF.
 
-% TODO: Descrever, passo a passo, o fluxo principal do piloto:
-%  1. Onboarding do utilizador e emissão de PID / (Q)EAA.
-%  2. Preparação do Relying Party (registo, certificados, definição de atributos necessários).
-%  3. Autenticação do utilizador ao serviço usando a Wallet.
-%  4. Apresentação seletiva de atributos e verificação por parte do Relying Party.
-%  5. Registo no transaction log / dashboard para efeitos de transparência e GDPR.
+\subsubsection{Verifier Service Architecture}
+The Verifier operates as a RESTful backend implementing the OpenID for Verifiable Presentations (OpenID4VP) 1.0 protocol \cite{openid4vp_spec}, serving as the trusted Relying Party endpoint as defined in Article 5b of the eIDAS 2.0 regulation \cite{eidas2_regulation}. OpenID4VP defines a mechanism on top of OAuth 2.0 that enables presentation of Verifiable Credentials as Verifiable Presentations. Built with Angular, it exposes two distinct API surfaces as prescribed by the ARF \cite{eudi_arf}:
 
-% Se quiseres, aqui podes também referir (em texto) um diagrama de sequência ou de componentes.
+The \textbf{Verifier API} manages the verification lifecycle, handling transaction initialization for Self-Issued OpenID Provider v2 (SIOPv2), OpenID4VP, or hybrid authentication requests \cite{openid4vp_spec}, and processing both successful and error responses from the User Wallet.
 
-\subsection{Security, Privacy, and Interoperability Considerations}
-\label{subsec:spi}
+The \textbf{Wallet API} facilitates bidirectional communication with the User Wallet. It provides a \textit{Get Requested Object} endpoint that delivers metadata via JWT-secured authorization, and a \textit{Post to Wallet} endpoint that enables the Wallet to generate authorization tokens for subsequent data presentation requests.
 
-% TODO: Discutir como o piloto:
-%  - cumpre requisitos de segurança (LoA, WSCD, MFA, certificados, revogação);
-%  - cumpre requisitos de privacidade (minimização, consentimento, unlinkability);
-%  - demonstra interoperabilidade (uso de formatos/protocolos comuns, reconhecimento transfronteiriço).
+% -----------------------------------------------------------
+\subsection{End-to-End Workflow}
+
+The pilot test follows a logical sequence that mirrors real-world credential usage within the EUDI Wallet ecosystem \cite{eudi_arf}:
+
+\begin{enumerate}
+    \item The user navigates to the Issuer's web portal and initiates a request for an academic diploma credential conforming to the W3C Verifiable Credentials Data Model \cite{w3c_vc_data_model}.
+    
+    \item The Issuer authenticates the user through established credentials (such as institutional username and password) and verifies their eligibility to receive the diploma credential based on academic records, following the attestation issuance procedures defined in the ARF \cite{eudi_arf}.
+    
+    \item Upon successful verification, the Issuer constructs a Verifiable Credential containing the diploma data according to the W3C standard \cite{w3c_vc_data_model}, cryptographically signs it with its private key, and transmits it securely to the User Wallet using the OpenID4VCI protocol \cite{openid4vci}.
+    
+    \item The User Wallet receives and stores the credential in its secure storage mechanism, leveraging the Wallet Secure Cryptographic Device (WSCD) as specified in the ARF \cite{eudi_arf}, making it available for future presentations.
+    
+    \item When the user needs to prove their academic qualification, they initiate a verification session with the Verifier, following the attestation presentation flows defined in the ARF \cite{eudi_arf}.
+    
+    \item The Verifier generates a QR code containing the presentation request parameters conforming to the OpenID4VP protocol \cite{openid4vp_spec}, which the user scans using their Wallet application.
+    
+    \item The Wallet retrieves the associated metadata from the verification request, understanding what information the Verifier requires based on the presentation definition or DCQL query \cite{openid4vp_spec}.
+    
+    \item The user reviews the request and selects the appropriate credential—in this case, the academic diploma—exercising their right to control which data is shared as guaranteed by the eIDAS 2.0 framework \cite{eidas2_regulation}.
+    
+    \item The Wallet constructs a Verifiable Presentation tailored to the Verifier's requirements, following the W3C Verifiable Credentials Data Model \cite{w3c_vc_data_model} and the OpenID4VP protocol \cite{openid4vp_spec}.
+    
+    \item The Verifier performs comprehensive validation as mandated by the ARF \cite{eudi_arf}, checking cryptographic signatures, verifying credential integrity, confirming the Issuer's trust status within the EUDI Trust Infrastructure \cite{eudi_trust_framework}, validating expiration and issuance timestamps, and ensuring full conformance with the OpenID4VP protocol \cite{openid4vp_spec}.
+    
+    \item Upon successful validation of all security and trust parameters, the Verifier provides confirmation to the user, completing the verification process in accordance with the relying party requirements specified in Article 5b of the eIDAS 2.0 regulation \cite{eidas2_regulation}.
+\end{enumerate}
+
+% -----------------------------------------------------------
+\subsection{Technical Deep Dive}
+
+This section explores the technical implementation details, security mechanisms, and protocol-level operations of each component as defined by the ARF \cite{eudi_arf} and relevant technical standards.
+
+\subsubsection{Issuer: Credential Generation and Cryptographic Signing}
+
+The Issuer orchestrates several critical operations to produce a secure, verifiable credential compliant with both the W3C Verifiable Credentials Data Model \cite{w3c_vc_data_model} and the OpenID4VCI protocol \cite{openid4vci}.
+
+\paragraph{Data Processing and Structuring}  
+When a request arrives, the Issuer first authenticates the user and retrieves the relevant academic records from its internal database. It then transforms this institutional data into the standardized W3C Verifiable Credential data model, ensuring interoperability with any compliant wallet or verifier. This transformation maps diploma attributes—such as degree type, field of study, graduation date, and honors—into the structured credential format. The credential structure includes metadata fields such as \texttt{@context}, \texttt{type}, \texttt{issuer}, \texttt{issuanceDate}, \texttt{credentialSubject}, and \texttt{proof} as specified in the W3C standard \cite{w3c_vc_data_model}.
+
+\paragraph{Cryptographic Operations}  
+Security is established through asymmetric cryptography conforming to the security requirements defined in the ARF \cite{eudi_arf}. The Issuer signs the credential using its private key, typically employing ECDSA (Elliptic Curve Digital Signature Algorithm) or EdDSA (Edwards-curve Digital Signature Algorithm) algorithms. The corresponding public key is published through the EUDI Trust Infrastructure \cite{eudi_trust_framework}, allowing any verifier to validate the signature's authenticity. Each credential includes a comprehensive \texttt{proof} block containing the signature value, a key identifier (KID) referencing the specific signing key, the algorithm used, an issuance timestamp, and a reference to the credential schema as prescribed by the W3C Verifiable Credentials Data Model \cite{w3c_vc_data_model}.
+
+\paragraph{Secure Transmission}
+The signed credential is transmitted to the User Wallet over HTTPS, ensuring confidentiality and integrity during transit. Following the OpenID4VCI protocol \cite{openid4vci}, the credential may be packaged as either a JWT-VC (JSON Web Token format) or a COSE/CBOR object, both widely supported standards in the digital identity space and accepted formats within the EUDI Wallet ecosystem \cite{eudi_arf}.
+
+\subsubsection{User Wallet: Secure Storage and Presentation Logic}
+
+The Wallet serves as the user's personal credential repository and presentation agent, requiring robust security at every layer as mandated by the ARF \cite{eudi_arf}.
+
+\paragraph{Storage Security Architecture}
+The wallet implements a Cryptographic Keys Management System responsible for managing and storing cryptographic information, including private keys generated during the credential issuance process. Credentials reside in the Android Keystore, which provides hardware-backed encryption on supported devices. Critically, the user's private keys never leave the device and cannot be extracted or backed up, ensuring compliance with the WSCD requirements defined in the ARF \cite{eudi_arf}. Accessing stored credentials requires active user consent, typically enforced through biometric authentication or PIN entry, preventing unauthorized access even if the device is compromised.
+
+\paragraph{Credential Management}
+The Wallet maintains complete Verifiable Credentials as received from Issuers, preserving all claims and metadata in accordance with the W3C Verifiable Credentials Data Model \cite{w3c_vc_data_model}. When a presentation request arrives via the OpenID4VP protocol \cite{openid4vp_spec}, the Wallet parses the metadata—often structured as JWT or Selective Disclosure JWT (SD-JWT)—to understand exactly what the Verifier requires. The Attestation Exchange Protocol defines how to request and present credentials in a secure and privacy-preserving fashion. It then constructs a Verifiable Presentation containing only the necessary attributes, implementing the principle of data minimization as guaranteed by the eIDAS 2.0 regulation \cite{eidas2_regulation}.
+
+\paragraph{Presentation Security}
+Each Verifiable Presentation is signed with the user's private key, cryptographically binding it to the wallet holder. For credentials that support selective disclosure, the Wallet can reveal only requested attributes while keeping others hidden, a key privacy feature of the EUDI Wallet ecosystem \cite{eudi_arf}. To prevent replay attacks, each presentation incorporates unique nonce and state parameters provided by the Verifier as specified in the OpenID4VP protocol \cite{openid4vp_spec}, ensuring the presentation cannot be intercepted and reused.
+
+\subsubsection{Verifier: Multi-Layer Validation Framework}
+
+The Verifier implements a defense-in-depth approach, performing checks at the cryptographic, structural, trust, and protocol levels as mandated by Article 5b of the eIDAS 2.0 regulation \cite{eidas2_regulation} and the ARF \cite{eudi_arf}.
+
+\paragraph{Initial Processing}
+The Verifier receives the Verifiable Presentation through an OpenID4VP channel—either as a redirect or POST request. It extracts the embedded Verifiable Credential(s) and validates the structural integrity, ensuring compliance with the expected schemas defined in the W3C Verifiable Credentials Data Model \cite{w3c_vc_data_model} and data formats specified in the ARF \cite{eudi_arf}.
+
+\paragraph{Cryptographic Verification}
+Both the Verifiable Presentation and the underlying Verifiable Credential undergo signature verification following the cryptographic requirements specified in the ARF \cite{eudi_arf}. The Verifier retrieves the Issuer's public key from trusted metadata sources within the EUDI Trust Infrastructure \cite{eudi_trust_framework} and confirms that the signatures are valid and unaltered. It also validates temporal parameters as defined in the OpenID4VP protocol \cite{openid4vp_spec}, checking that nonce values match, state parameters are correct, credentials haven't expired, and issuance dates are reasonable.
+
+\paragraph{Trust Framework Integration}
+Beyond cryptographic validity, the Verifier must establish trust in the Issuer through the EUDI Trust Infrastructure \cite{eudi_trust_framework}. It confirms that the Issuer is a recognized, trusted entity within the EUDI ecosystem, validates that the credential type and format are permitted for the requested purpose, and checks revocation status against any configured revocation lists or status endpoints as specified in the ARF \cite{eudi_arf}.
+
+\paragraph{Authorization Decision}
+After completing all validation layers mandated by the eIDAS 2.0 regulation \cite{eidas2_regulation} and the ARF \cite{eudi_arf}, the Verifier makes its final determination. Success results in a confirmation message delivered to the user. Failure triggers a standardized error response conforming to the OpenID4VP protocol \cite{openid4vp_spec}—such as \texttt{invalid\_signature}, \texttt{expired\_credential}, or \texttt{issuer\_not\_trusted}—providing clear feedback about why the verification failed while maintaining security by not revealing sensitive details to potential attackers.
+
+
 
 % % % % % % % % % % % % % % % % % % % % %
 %               CONCLUSION
